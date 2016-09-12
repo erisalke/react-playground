@@ -12,7 +12,7 @@
     "url": "git+https://github.com/erisalke/react-playground.git"
   },
   "author": "Piotr Majchrzyk",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/erisalke/react-playground/issues"
   },
@@ -22,6 +22,8 @@
     "babel-core": "^6.14.0",
     "babel-loader": "^6.2.5",
     "babel-preset-es2015": "^6.14.0",
+    "babel-preset-react": "^6.11.1",
+    "babel-preset-stage-2": "^6.13.0",
     "html-webpack-plugin": "^2.22.0"
   }
 }
