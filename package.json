@@ -1,0 +1,27 @@
+{
+  "name": "react-playground",
+  "version": "1.0.0",
+  "description": "Let's go!",
+  "main": "index.js",
+  "scripts": {
+    "start": "NODE_PATH='source' node devServer.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/erisalke/react-playground.git"
+  },
+  "author": "Piotr Majchrzyk",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/erisalke/react-playground/issues"
+  },
+  "homepage": "https://github.com/erisalke/react-playground#readme",
+  "devDependencies": {
+    "babel-cli": "^6.14.0",
+    "babel-core": "^6.14.0",
+    "babel-loader": "^6.2.5",
+    "babel-preset-es2015": "^6.14.0",
+    "html-webpack-plugin": "^2.22.0"
+  }
+}
