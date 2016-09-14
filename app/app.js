@@ -1,13 +1,17 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { Link } from 'react-router'
 
-var Hello = React.createClass({
+export default React.createClass({
   render: function() {
-    return <div>Hello {this.props.name}</div>;
+    return(
+      <div>
+        <h1>React Playground menu</h1>
+        <ul>
+          <li><Link to="/about" activeClassName="active">About</Link></li>
+          <li><Link to="/repos" activeClassName="active">Repos</Link></li>
+        </ul>
+        {this.props.children}
+      </div>
+    )
   }
 });
-
-ReactDOM.render(
-  <Hello name="World!" />,
-  document.getElementById('root')
-);

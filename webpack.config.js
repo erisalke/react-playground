@@ -6,14 +6,15 @@ var HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
 });
 
 module.exports = {
-    entry: "./app/app.js",
+    entry: "./app/index.js",
     module: {
       loaders: [
         {
           test: /\.js$/,
-          include: __dirname + '/app',
+          exclude: [__dirname+'/node_modules'],
           loader: 'babel'
-        }
+        },
+        { test: /\.css$/, loader: "style-loader!css-loader" }
       ]
     },
     output: {
