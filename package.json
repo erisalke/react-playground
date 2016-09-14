@@ -4,7 +4,9 @@
   "description": "Let's go!",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --inline --content-base public/html",
+    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
+    "start:dev": "webpack-dev-server --inline --content-base public --history-api-fallback",
+    "start:prod": "webpack && node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -29,5 +31,10 @@
     "react-router": "^2.8.0",
     "style-loader": "^0.13.1",
     "webpack-dev-server": "^1.14.1"
+  },
+  "dependencies": {
+    "compression": "^1.6.2",
+    "express": "^4.14.0",
+    "if-env": "^1.0.0"
   }
 }

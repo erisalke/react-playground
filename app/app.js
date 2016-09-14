@@ -1,5 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router'
+import NavLink from './modules/NavLink.js';
+import { IndexLink } from 'react-router';
 
 export default React.createClass({
   render: function() {
@@ -7,8 +8,9 @@ export default React.createClass({
       <div>
         <h1>React Playground menu</h1>
         <ul>
-          <li><Link to="/about" activeClassName="active">About</Link></li>
-          <li><Link to="/repos" activeClassName="active">Repos</Link></li>
+          <li><NavLink to="/" onlyActiveOnIndex={true}>Home</NavLink></li>
+          <li><NavLink to="/about">About</NavLink></li>
+          <li><NavLink to="/repos">Repos</NavLink></li>
         </ul>
         {this.props.children}
       </div>

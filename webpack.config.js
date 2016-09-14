@@ -1,9 +1,10 @@
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
   template: __dirname + '/app/index.html',
-  filename: 'html/index.html',
+  filename: './index.html',
   inject: 'body'
 });
+var webpack = require('webpack')
 
 module.exports = {
     entry: "./app/index.js",
@@ -18,8 +19,13 @@ module.exports = {
       ]
     },
     output: {
-      filename: "js/bundle.js",
+      filename: "/bundle.js",
       path: __dirname + '/public'
     },
-    plugins: [HTMLWebpackPluginConfig]
+    plugins: process.env.NODE_ENV === 'production' ? [
+      HTMLWebpackPluginConfig,
+      new webpack.optimize.DedupePlugin(),
+      new webpack.optimize.OccurrenceOrderPlugin(),
+      new webpack.optimize.UglifyJsPlugin()
+    ] : [HTMLWebpackPluginConfig],
   };
