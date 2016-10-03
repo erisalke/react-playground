@@ -1,5 +1,7 @@
 import { createStore } from 'redux';
-import todo from './reducers/todo.js'
+import rooms from './reducers/rooms.js'
 
-const store = createStore(todo);
+//const store = createStore(rooms);
+let store = createStore(rooms, window.devToolsExtension && window.devToolsExtension());
+
 export default store;
