@@ -7,6 +7,7 @@ const Home = React.createClass({
         <h1>About me</h1>
         <p>
           My name is...
+          This is just a pet project to play around with React.
         </p>
       </div>
     );
