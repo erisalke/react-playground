@@ -7,9 +7,9 @@ var express = require('express');
 var bodyParser = require('body-parser').json();
 
 var app = express();
-var db = { rooms: [{"name":"super pokoj"},{"name":"default2"}] }
+var expressWs = require('express-ws')(app);
 
-//app.use(express.static('public'));
+var db = { rooms: [{"name":"super pokoj"},{"name":"default2"}] }
 
 const compiler = webpack(webpackConfig)
 console.log(webpackConfig.output.publicPath)
@@ -26,6 +26,7 @@ app.use(webpackHotMiddleware(compiler))
 app.get('/', (req, res) => {
   res.sendFile(webpackConfig.output.path + '/index.html');
 })
+
 app.get('/api/rooms', function (req, res) {
   console,
   res.json(db.rooms);
@@ -39,6 +40,12 @@ app.post('/api/rooms', bodyParser, function (req, res) {
   res.json(room);
 });
 
+app.ws('/socket.io', function(ws, req) {
+  ws.on('message', function(msg) {
+    console.log("msg received: ", msg);
+    ws.send("echo" + msg);
+  });
+});
 
 app.listen(3001, function () {
   console.log('Listening on port 3001!');

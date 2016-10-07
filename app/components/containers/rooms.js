@@ -10,7 +10,7 @@ const Rooms = React.createClass({
       <div className="home-page">
         <h1>Game Rooms</h1>
         <p>
-          This is a list of available game roomsasdfasdfasdf
+          This is a list of available game rooms
         </p>
         <p>
           <CreateRoomButton />
