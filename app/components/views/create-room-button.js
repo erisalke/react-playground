@@ -5,10 +5,10 @@ import * as types from '../../actions/action-types';
 import { createRoom } from '../../api/room-api'
 
 const CreateRoomButton = React.createClass({
-  // i: 0,
+  i: 0,
   create: function() {
     var room = {
-      // id: i,
+      id: this.i++,
       name: "pokoj_"
     }
     createRoom(room)

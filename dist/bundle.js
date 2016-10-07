@@ -28910,10 +28910,10 @@
 	var CreateRoomButton = _react2.default.createClass({
 	  displayName: 'CreateRoomButton',
 
-	  // i: 0,
+	  i: 0,
 	  create: function create() {
 	    var room = {
-	      // id: i,
+	      id: this.i++,
 	      name: "pokoj_"
 	    };
 	    (0, _roomApi.createRoom)(room);
@@ -30475,8 +30475,10 @@
 	          { key: room.id, className: 'list-group-item' },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'details' },
-	            room.name
+	            { key: room.id, className: 'details' },
+	            room.name,
+	            ' - ',
+	            room.id
 	          )
 	        );
 	      })

@@ -12,7 +12,6 @@ var io = require('socket.io')(server);
 var db = { rooms: [{"name":"super pokoj"},{"name":"default2"}] }
 
 const compiler = webpack(webpackConfig)
-
 app.use(webpackDevMiddleware(
   compiler,
   {
@@ -28,18 +27,27 @@ app.get('/', (req, res) => {
   res.sendFile(webpackConfig.output.path + '/index.html');
 })
 
+
+// *****************
+// * web api       *
+// *****************
 app.get('/api/rooms', function (req, res) {
   res.json(db.rooms);
 });
 
 app.post('/api/rooms', bodyParser, function (req, res) {
   var room = {
-    name: req.body.name
+    name: req.body.name,
+    id: req.body.id
   }
   db.rooms.push(room);
   res.json(room);
 });
 
+
+// *****************
+// * sockets api   *
+// *****************
 io.on('connection', function (socket) {
   socket.emit('news', { hello: 'world' });
   socket.on('my other event', function (data) {

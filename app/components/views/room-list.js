@@ -11,7 +11,7 @@ export default function(props) {
 
           return (
             <li key={room.id} className="list-group-item">
-              <div className="details">{room.name}</div>
+              <div key={room.id} className="details">{room.name} - {room.id}</div>
             </li>
           );
 

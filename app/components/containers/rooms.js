@@ -9,15 +9,15 @@ const Rooms = React.createClass({
     return (
       <div className="home-page">
         <h1>Game Rooms</h1>
-        <p>
+        <div>
           This is a list of available game rooms
-        </p>
-        <p>
+        </div>
+        <div>
           <CreateRoomButton />
-        </p>
-        <p>
+        </div>
+        <div>
           <RoomList rooms={ this.props.rooms } />
-        </p>
+        </div>
       </div>
     );
   }
