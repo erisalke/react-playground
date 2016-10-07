@@ -6,10 +6,8 @@ import { createRoom } from '../../api/room-api'
 import {emitEvent} from '../../api/websockets';
 
 const CreateRoomButton = React.createClass({
-  i: 0,
   create: function() {
     var room = {
-      id: this.i++,
       name: "pokoj_"
     }
     //createRoom(room)

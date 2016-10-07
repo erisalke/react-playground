@@ -28900,10 +28900,8 @@
 	var CreateRoomButton = _react2.default.createClass({
 	  displayName: 'CreateRoomButton',
 
-	  i: 0,
 	  create: function create() {
 	    var room = {
-	      id: this.i++,
 	      name: "pokoj_"
 	    };
 	    //createRoom(room)

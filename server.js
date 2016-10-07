@@ -2,6 +2,7 @@ import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackConfig from './webpack.server.config';
+import crypto from 'crypto';
 
 var express = require('express');
 var bodyParser = require('body-parser').json();
@@ -10,6 +11,8 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
 var db = { rooms: [{"name":"super pokoj"},{"name":"default2"}] }
+
+
 
 const compiler = webpack(webpackConfig)
 app.use(webpackDevMiddleware(
@@ -38,7 +41,7 @@ app.get('/api/rooms', function (req, res) {
 app.post('/api/rooms', bodyParser, function (req, res) {
   var room = {
     name: req.body.name,
-    id: req.body.id
+    id: crypto.randomBytes('20').toString('hex')
   }
   db.rooms.push(room);
   res.json(room);
@@ -49,16 +52,16 @@ app.post('/api/rooms', bodyParser, function (req, res) {
 // * sockets api   *
 // *****************
 
-
 io.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
+//  socket.emit('news', { hello: 'world' });
   socket.on('CREATE_ROOM', function (data) {
     var room = {
       name: data.name,
-      id: data.id
+      id: crypto.randomBytes(20).toString('hex')
     }
     db.rooms.push(room);
     socket.emit('rooms', room)
+    socket.broadcast.emit('rooms', room)
   });
   socket.on('my other event', function (data) {
     console.log("server", data);
