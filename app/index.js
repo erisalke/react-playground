@@ -10,33 +10,14 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-const tryit = () => {
-  var socket = io('http://localhost');
+const initSocket = () => {
+  var socket = io.connect('http://localhost:3001', {reconnect:true})
   socket.on('news', function (data) {
-    console.log(data);
+    console.log("client", data);
     socket.emit('my other event', { my: 'data' });
-  });
-}
-tryit();
-
-function initSocket() {
-  var socket = io.connect('ws://localhost:3001/echo', {reconnect: true})
-
-  //const socket = io('', {path: '/ws'});
-  // const socket = io('ws://localhost:3001', {path: '/echo'});
-
-
-  socket.on('connect', (data) => {
-    console.log('------------------ here')
-    // store.dispatch(receiveQuestionResult(data))
-  });
-
-  socket.on('message', (data) => {
-    console.log('some message')
-    // store.dispatch(receiveQuestionResult(data))
   });
 
   return socket;
 }
 
-// initSocket();
+initSocket();

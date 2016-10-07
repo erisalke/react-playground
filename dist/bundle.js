@@ -76,36 +76,17 @@
 	  _router2.default
 	), document.getElementById('root'));
 
-	var tryit = function tryit() {
-	  var socket = (0, _socket2.default)('http://localhost');
+	var initSocket = function initSocket() {
+	  var socket = _socket2.default.connect('http://localhost:3001', { reconnect: true });
 	  socket.on('news', function (data) {
-	    console.log(data);
+	    console.log("client", data);
 	    socket.emit('my other event', { my: 'data' });
-	  });
-	};
-	tryit();
-
-	function initSocket() {
-	  var socket = _socket2.default.connect('ws://localhost:3001/echo', { reconnect: true });
-
-	  //const socket = io('', {path: '/ws'});
-	  // const socket = io('ws://localhost:3001', {path: '/echo'});
-
-
-	  socket.on('connect', function (data) {
-	    console.log('------------------ here');
-	    // store.dispatch(receiveQuestionResult(data))
-	  });
-
-	  socket.on('message', function (data) {
-	    console.log('some message');
-	    // store.dispatch(receiveQuestionResult(data))
 	  });
 
 	  return socket;
-	}
+	};
 
-	// initSocket();
+	initSocket();
 
 /***/ },
 /* 1 */

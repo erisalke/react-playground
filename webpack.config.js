@@ -22,7 +22,6 @@ module.exports = {
       filename: "bundle.js",
       path: __dirname + '/dist',
       publicPath: '/static/'
-
     },
     plugins: process.env.NODE_ENV === 'production' ? [
       HTMLWebpackPluginConfig,
