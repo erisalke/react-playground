@@ -48,8 +48,18 @@ app.post('/api/rooms', bodyParser, function (req, res) {
 // *****************
 // * sockets api   *
 // *****************
+
+
 io.on('connection', function (socket) {
   socket.emit('news', { hello: 'world' });
+  socket.on('CREATE_ROOM', function (data) {
+    var room = {
+      name: data.name,
+      id: data.id
+    }
+    db.rooms.push(room);
+    socket.emit('rooms', room)
+  });
   socket.on('my other event', function (data) {
     console.log("server", data);
   });

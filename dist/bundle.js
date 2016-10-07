@@ -64,9 +64,7 @@
 
 	var _store2 = _interopRequireDefault(_store);
 
-	var _socket = __webpack_require__(292);
-
-	var _socket2 = _interopRequireDefault(_socket);
+	var _websockets = __webpack_require__(291);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -76,17 +74,7 @@
 	  _router2.default
 	), document.getElementById('root'));
 
-	var initSocket = function initSocket() {
-	  var socket = _socket2.default.connect('http://localhost:3001', { reconnect: true });
-	  socket.on('news', function (data) {
-	    console.log("client", data);
-	    socket.emit('my other event', { my: 'data' });
-	  });
-
-	  return socket;
-	};
-
-	initSocket();
+	(0, _websockets.initSocket)();
 
 /***/ },
 /* 1 */
@@ -28824,7 +28812,7 @@
 
 	var _createRoomButton2 = _interopRequireDefault(_createRoomButton);
 
-	var _roomList = __webpack_require__(291);
+	var _roomList = __webpack_require__(342);
 
 	var _roomList2 = _interopRequireDefault(_roomList);
 
@@ -28847,17 +28835,17 @@
 	        'Game Rooms'
 	      ),
 	      _react2.default.createElement(
-	        'p',
+	        'div',
 	        null,
 	        'This is a list of available game rooms'
 	      ),
 	      _react2.default.createElement(
-	        'p',
+	        'div',
 	        null,
 	        _react2.default.createElement(_createRoomButton2.default, null)
 	      ),
 	      _react2.default.createElement(
-	        'p',
+	        'div',
 	        null,
 	        _react2.default.createElement(_roomList2.default, { rooms: this.props.rooms })
 	      )
@@ -28903,6 +28891,8 @@
 
 	var _roomApi = __webpack_require__(267);
 
+	var _websockets = __webpack_require__(291);
+
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -28916,7 +28906,8 @@
 	      id: this.i++,
 	      name: "pokoj_"
 	    };
-	    (0, _roomApi.createRoom)(room);
+	    //createRoom(room)
+	    (0, _websockets.emitEvent)('CREATE_ROOM', room);
 	  },
 
 	  render: function render() {
@@ -29062,6 +29053,14 @@
 	    return response;
 	  });
 	}
+
+	// export function createRoom(room) {
+	//   return axios.post('http://localhost:3001/api/rooms', room)
+	//     .then(response => {
+	//       store.dispatch(createRoomSuccess(response.data));
+	//       return response;
+	//     });
+	// }
 
 	function createRoom(room) {
 	  return _axios2.default.post('http://localhost:3001/api/rooms', room).then(function (response) {
@@ -30455,46 +30454,39 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.emitEvent = exports.initSocket = undefined;
 
-	exports.default = function (props) {
-	  return _react2.default.createElement(
-	    'div',
-	    null,
-	    _react2.default.createElement(
-	      'h2',
-	      null,
-	      'room list'
-	    ),
-	    _react2.default.createElement(
-	      'ul',
-	      { className: 'list-group' },
-	      props.rooms.map(function (room) {
+	var _socket = __webpack_require__(292);
 
-	        return _react2.default.createElement(
-	          'li',
-	          { key: room.id, className: 'list-group-item' },
-	          _react2.default.createElement(
-	            'div',
-	            { key: room.id, className: 'details' },
-	            room.name,
-	            ' - ',
-	            room.id
-	          )
-	        );
-	      })
-	    )
-	  );
-	};
+	var _socket2 = _interopRequireDefault(_socket);
 
-	var _react = __webpack_require__(1);
+	var _store = __webpack_require__(264);
 
-	var _react2 = _interopRequireDefault(_react);
+	var _store2 = _interopRequireDefault(_store);
 
-	var _createRoomButton = __webpack_require__(262);
-
-	var _createRoomButton2 = _interopRequireDefault(_createRoomButton);
+	var _roomActions = __webpack_require__(290);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var socket = _socket2.default.connect('http://localhost:3001', { reconnect: true });
+
+	var initSocket = function initSocket() {
+	  socket.on('rooms', function (data) {
+	    _store2.default.dispatch((0, _roomActions.createRoomSuccess)(data));
+	  });
+
+	  socket.on('news', function (data) {
+	    console.log("client", data);
+	    socket.emit('my other event', { my: 'data' });
+	  });
+	};
+
+	var emitEvent = function emitEvent(type, payload) {
+	  return socket.emit(type, payload);
+	};
+
+	exports.initSocket = initSocket;
+	exports.emitEvent = emitEvent;
 
 /***/ },
 /* 292 */
@@ -38133,6 +38125,56 @@
 	};
 
 
+
+/***/ },
+/* 342 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	exports.default = function (props) {
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    _react2.default.createElement(
+	      'h2',
+	      null,
+	      'room list'
+	    ),
+	    _react2.default.createElement(
+	      'ul',
+	      { className: 'list-group' },
+	      props.rooms.map(function (room) {
+
+	        return _react2.default.createElement(
+	          'li',
+	          { key: room.id, className: 'list-group-item' },
+	          _react2.default.createElement(
+	            'div',
+	            { key: room.id, className: 'details' },
+	            room.name,
+	            ' - ',
+	            room.id
+	          )
+	        );
+	      })
+	    )
+	  );
+	};
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _createRoomButton = __webpack_require__(262);
+
+	var _createRoomButton2 = _interopRequireDefault(_createRoomButton);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }
 /******/ ]);

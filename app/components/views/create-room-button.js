@@ -3,6 +3,7 @@ import Button from '../basic/button'
 import store from '../../store';
 import * as types from '../../actions/action-types';
 import { createRoom } from '../../api/room-api'
+import {emitEvent} from '../../api/websockets';
 
 const CreateRoomButton = React.createClass({
   i: 0,
@@ -11,7 +12,8 @@ const CreateRoomButton = React.createClass({
       id: this.i++,
       name: "pokoj_"
     }
-    createRoom(room)
+    //createRoom(room)
+    emitEvent('CREATE_ROOM', room)
   },
 
   render: function() {
