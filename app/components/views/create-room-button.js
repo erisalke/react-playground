@@ -10,7 +10,7 @@ const CreateRoomButton = React.createClass({
     var room = {
       name: "pokoj_"
     }
-    //createRoom(room)
+    
     emitEvent('CREATE_ROOM', room)
   },
 

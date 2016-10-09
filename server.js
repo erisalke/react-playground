@@ -26,9 +26,8 @@ app.use(webpackDevMiddleware(
 app.use(webpackHotMiddleware(compiler))
 
 app.use('/static', express.static('dist'))
-app.get('/', (req, res) => {
-  res.sendFile(webpackConfig.output.path + '/index.html');
-})
+
+
 
 
 // *****************
@@ -46,6 +45,8 @@ app.post('/api/rooms', bodyParser, function (req, res) {
   db.rooms.push(room);
   res.json(room);
 });
+
+app.get('*', (req, res) => { res.sendFile(webpackConfig.output.path + '/index.html'); })
 
 
 // *****************

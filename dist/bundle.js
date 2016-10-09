@@ -23077,6 +23077,10 @@
 
 	var _rooms2 = _interopRequireDefault(_rooms);
 
+	var _room = __webpack_require__(343);
+
+	var _room2 = _interopRequireDefault(_room);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.default = _react2.default.createElement(
@@ -23086,7 +23090,11 @@
 	    _reactRouter.Route,
 	    { component: _mainLayout2.default },
 	    _react2.default.createElement(_reactRouter.Route, { path: '/', component: _home2.default }),
-	    _react2.default.createElement(_reactRouter.Route, { path: '/rooms', component: _rooms2.default }),
+	    _react2.default.createElement(
+	      _reactRouter.Route,
+	      { path: '/rooms', component: _rooms2.default },
+	      _react2.default.createElement(_reactRouter.Route, { path: '/room/:roomId', component: _room2.default })
+	    ),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/about', component: _about2.default })
 	  )
 	);
@@ -28904,7 +28912,7 @@
 	    var room = {
 	      name: "pokoj_"
 	    };
-	    //createRoom(room)
+
 	    (0, _websockets.emitEvent)('CREATE_ROOM', room);
 	  },
 
@@ -38152,8 +38160,8 @@
 	          'li',
 	          { key: room.id, className: 'list-group-item' },
 	          _react2.default.createElement(
-	            'div',
-	            { key: room.id, className: 'details' },
+	            _reactRouter.Link,
+	            { to: "/room/" + room.id, key: room.id, className: 'details' },
 	            room.name,
 	            ' - ',
 	            room.id
@@ -38172,7 +38180,56 @@
 
 	var _createRoomButton2 = _interopRequireDefault(_createRoomButton);
 
+	var _reactRouter = __webpack_require__(197);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ },
+/* 343 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(172);
+
+	var _reactRouter = __webpack_require__(197);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	// import CreateRoomButton from '../views/create-room-button'
+	// import RoomList from '../views/room-list';
+	// import store from '../../store';
+
+	var Room = _react2.default.createClass({
+	  displayName: 'Room',
+
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'home-page' },
+	      _react2.default.createElement(
+	        'h1',
+	        null,
+	        'A specifiC game room'
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        'Enjoy the game'
+	      )
+	    );
+	  }
+	});
+
+	exports.default = Room;
 
 /***/ }
 /******/ ]);

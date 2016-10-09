@@ -1,5 +1,6 @@
 import React from 'react';
 import CreateRoomButton from './create-room-button'
+import { Link } from 'react-router';
 
 export default function(props) {
   return (
@@ -11,7 +12,7 @@ export default function(props) {
 
           return (
             <li key={room.id} className="list-group-item">
-              <div key={room.id} className="details">{room.name} - {room.id}</div>
+              <Link to={ "/room/"+room.id } key={room.id} className="details">{room.name} - {room.id}</Link>
             </li>
           );
 
