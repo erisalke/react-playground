@@ -23077,7 +23077,7 @@
 
 	var _rooms2 = _interopRequireDefault(_rooms);
 
-	var _room = __webpack_require__(343);
+	var _room = __webpack_require__(344);
 
 	var _room2 = _interopRequireDefault(_room);
 
@@ -28817,7 +28817,7 @@
 
 	var _createRoomButton2 = _interopRequireDefault(_createRoomButton);
 
-	var _roomList = __webpack_require__(342);
+	var _roomList = __webpack_require__(343);
 
 	var _roomList2 = _interopRequireDefault(_roomList);
 
@@ -29024,7 +29024,7 @@
 	});
 	var ADD_ROOM = exports.ADD_ROOM = 'ADD_ROOM';
 	var CREATE_ROOM_SUCCESS = exports.CREATE_ROOM_SUCCESS = 'CREATE_ROOM_SUCCESS';
-	var GET_ROOM_SUCCESS = exports.GET_ROOM_SUCCESS = 'GET_ROOM_SUCCESS';
+	var GET_ROOMS_SUCCESS = exports.GET_ROOMS_SUCCESS = 'GET_ROOMS_SUCCESS';
 
 /***/ },
 /* 267 */
@@ -29056,14 +29056,6 @@
 	    return response;
 	  });
 	}
-
-	// export function createRoom(room) {
-	//   return axios.post('http://localhost:3001/api/rooms', room)
-	//     .then(response => {
-	//       store.dispatch(createRoomSuccess(response.data));
-	//       return response;
-	//     });
-	// }
 
 	function createRoom(room) {
 	  return _axios2.default.post('http://localhost:3001/api/rooms', room).then(function (response) {
@@ -30469,12 +30461,22 @@
 
 	var _roomActions = __webpack_require__(290);
 
+	var _websocketsActionTypes = __webpack_require__(342);
+
+	var types = _interopRequireWildcard(_websocketsActionTypes);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var socket = _socket2.default.connect('http://localhost:3001', { reconnect: true });
 
 	var initSocket = function initSocket() {
-	  socket.on('rooms', function (data) {
+	  socket.on(types.GET_ROOMS, function (data) {
+	    _store2.default.dispatch((0, _roomActions.getRoomsSuccess)(data));
+	  });
+
+	  socket.on(types.NEW_ROOM, function (data) {
 	    _store2.default.dispatch((0, _roomActions.createRoomSuccess)(data));
 	  });
 
@@ -38130,6 +38132,21 @@
 
 /***/ },
 /* 342 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var CREATE_ROOM = exports.CREATE_ROOM = 'CREATE_ROOM';
+
+	var ALL_ROOMS = exports.ALL_ROOMS = 'ALL_ROOMS';
+
+	var NEW_ROOM = exports.NEW_ROOM = 'NEW_ROOM';
+
+/***/ },
+/* 343 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -38181,7 +38198,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
-/* 343 */
+/* 344 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -38198,7 +38215,7 @@
 
 	var _reactRouter = __webpack_require__(197);
 
-	var _chat = __webpack_require__(344);
+	var _chat = __webpack_require__(345);
 
 	var _chat2 = _interopRequireDefault(_chat);
 
@@ -38242,7 +38259,7 @@
 	exports.default = Room;
 
 /***/ },
-/* 344 */
+/* 345 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -38261,11 +38278,11 @@
 
 	var _store2 = _interopRequireDefault(_store);
 
-	var _chatBox = __webpack_require__(345);
+	var _chatBox = __webpack_require__(346);
 
 	var _chatBox2 = _interopRequireDefault(_chatBox);
 
-	var _chatInput = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../views/chat-input\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var _chatInput = __webpack_require__(347);
 
 	var _chatInput2 = _interopRequireDefault(_chatInput);
 
@@ -38300,7 +38317,7 @@
 	exports.default = Chat;
 
 /***/ },
-/* 345 */
+/* 346 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -38313,11 +38330,6 @@
 	  return _react2.default.createElement(
 	    'div',
 	    null,
-	    _react2.default.createElement(
-	      'h4',
-	      null,
-	      ' chat box'
-	    ),
 	    _react2.default.createElement(
 	      'ul',
 	      null,
@@ -38332,6 +38344,33 @@
 	        'some chat message'
 	      )
 	    )
+	  );
+	};
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(197);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ },
+/* 347 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	exports.default = function (props) {
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    _react2.default.createElement('input', { type: 'text' }),
+	    _react2.default.createElement('input', { type: 'button' })
 	  );
 	};
 

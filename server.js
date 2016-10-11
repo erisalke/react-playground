@@ -10,9 +10,7 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
-var db = { rooms: [{"name":"super pokoj"},{"name":"default2"}] }
-
-
+var db = { rooms: [{"id":1, "name":"default room"}] }
 
 const compiler = webpack(webpackConfig)
 app.use(webpackDevMiddleware(
@@ -28,14 +26,13 @@ app.use(webpackHotMiddleware(compiler))
 app.use('/static', express.static('dist'))
 
 
-
-
 // *****************
 // * web api       *
 // *****************
-app.get('/api/rooms', function (req, res) {
-  res.json(db.rooms);
-});
+// app.get('/api/rooms', function (req, res) {
+//   console.log(db.rooms)
+//   res.json(db.rooms);
+// });
 
 app.post('/api/rooms', bodyParser, function (req, res) {
   var room = {
@@ -52,17 +49,19 @@ app.get('*', (req, res) => { res.sendFile(webpackConfig.output.path + '/index.ht
 // *****************
 // * sockets api   *
 // *****************
+import * as types from './app/api/websockets-action-types'
 
 io.on('connection', function (socket) {
-//  socket.emit('news', { hello: 'world' });
-  socket.on('CREATE_ROOM', function (data) {
+  socket.emit(types.ALL_ROOMS, db.rooms);
+
+  socket.on(types.CREATE_ROOM, function (data) {
     var room = {
       name: data.name,
       id: crypto.randomBytes(20).toString('hex')
     }
     db.rooms.push(room)
-    socket.emit('rooms', room)
-    socket.broadcast.emit('rooms', room)
+    socket.emit(types.NEW_ROOM, room)
+    socket.broadcast.emit(types.NEW_ROOM, room)
   });
 
   socket.on('chat', function (data) {
