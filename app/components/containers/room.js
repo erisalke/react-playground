@@ -4,6 +4,8 @@ import { Link } from 'react-router';
 // import CreateRoomButton from '../views/create-room-button'
 // import RoomList from '../views/room-list';
 // import store from '../../store';
+import Chat from './chat';
+// import CreateRoomButton from './create-room-button'
 
 const Room = React.createClass({
   render: function() {
@@ -13,6 +15,9 @@ const Room = React.createClass({
         <Link to="/rooms">Go back</Link>
         <div>
           Enjoy the game
+        </div>
+        <div>
+          <Chat />
         </div>
       </div>
     );

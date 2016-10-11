@@ -10,7 +10,6 @@ const initSocket = () => {
   });
 
   socket.on('news', function (data) {
-    console.log("client", data);
     socket.emit('my other event', { my: 'data' });
   });
 }

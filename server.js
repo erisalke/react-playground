@@ -60,12 +60,16 @@ io.on('connection', function (socket) {
       name: data.name,
       id: crypto.randomBytes(20).toString('hex')
     }
-    db.rooms.push(room);
+    db.rooms.push(room)
     socket.emit('rooms', room)
     socket.broadcast.emit('rooms', room)
   });
-  socket.on('my other event', function (data) {
-    console.log("server", data);
+
+  socket.on('chat', function (data) {
+    event = data.event
+
+    socket.emit('chat_messages', data)
+    socket.broadcast.emit('chat_messages', data)
   });
 });
 

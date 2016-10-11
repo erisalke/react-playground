@@ -23090,11 +23090,8 @@
 	    _reactRouter.Route,
 	    { component: _mainLayout2.default },
 	    _react2.default.createElement(_reactRouter.Route, { path: '/', component: _home2.default }),
-	    _react2.default.createElement(
-	      _reactRouter.Route,
-	      { path: '/rooms', component: _rooms2.default },
-	      _react2.default.createElement(_reactRouter.Route, { path: '/room/:roomId', component: _room2.default })
-	    ),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/rooms', component: _rooms2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/room/:roomId', component: _room2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/about', component: _about2.default })
 	  )
 	);
@@ -30482,7 +30479,6 @@
 	  });
 
 	  socket.on('news', function (data) {
-	    console.log("client", data);
 	    socket.emit('my other event', { my: 'data' });
 	  });
 	};
@@ -38202,11 +38198,13 @@
 
 	var _reactRouter = __webpack_require__(197);
 
+	var _chat = __webpack_require__(344);
+
+	var _chat2 = _interopRequireDefault(_chat);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	// import CreateRoomButton from '../views/create-room-button'
-	// import RoomList from '../views/room-list';
-	// import store from '../../store';
+	// import CreateRoomButton from './create-room-button'
 
 	var Room = _react2.default.createClass({
 	  displayName: 'Room',
@@ -38218,18 +38216,132 @@
 	      _react2.default.createElement(
 	        'h1',
 	        null,
-	        'A specifiC game room'
+	        'A specific game room'
+	      ),
+	      _react2.default.createElement(
+	        _reactRouter.Link,
+	        { to: '/rooms' },
+	        'Go back'
 	      ),
 	      _react2.default.createElement(
 	        'div',
 	        null,
 	        'Enjoy the game'
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(_chat2.default, null)
 	      )
 	    );
 	  }
 	});
-
+	// import CreateRoomButton from '../views/create-room-button'
+	// import RoomList from '../views/room-list';
+	// import store from '../../store';
 	exports.default = Room;
+
+/***/ },
+/* 344 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(172);
+
+	var _store = __webpack_require__(264);
+
+	var _store2 = _interopRequireDefault(_store);
+
+	var _chatBox = __webpack_require__(345);
+
+	var _chatBox2 = _interopRequireDefault(_chatBox);
+
+	var _chatInput = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../views/chat-input\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+
+	var _chatInput2 = _interopRequireDefault(_chatInput);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Chat = _react2.default.createClass({
+	  displayName: 'Chat',
+
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'h3',
+	        null,
+	        'chat'
+	      ),
+	      _react2.default.createElement(_chatBox2.default, null),
+	      _react2.default.createElement(_chatInput2.default, null)
+	    );
+	  }
+	});
+
+	// const mapStateToProps = function(store) {
+	//   return {
+	//     rooms: store.rooms
+	//   };
+	// };
+	//
+	// export default connect(mapStateToProps)(Rooms);
+
+	exports.default = Chat;
+
+/***/ },
+/* 345 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	exports.default = function (props) {
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    _react2.default.createElement(
+	      'h4',
+	      null,
+	      ' chat box'
+	    ),
+	    _react2.default.createElement(
+	      'ul',
+	      null,
+	      _react2.default.createElement(
+	        'li',
+	        null,
+	        'some chat message'
+	      ),
+	      _react2.default.createElement(
+	        'li',
+	        null,
+	        'some chat message'
+	      )
+	    )
+	  );
+	};
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(197);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }
 /******/ ]);
