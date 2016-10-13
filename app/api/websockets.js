@@ -1,19 +1,28 @@
 import io from 'socket.io-client';
 import store from '../store';
 import { getRoomsSuccess, createRoomSuccess } from '../actions/room-actions';
-import * as types from './websockets-action-types'
 
 const socket = io.connect('http://localhost:3001', {reconnect: true});
 
 const initSocket = () => {
-  socket.on(types.ALL_ROOMS, function (data) {
+  // starting point message
+  socket.on('connect', () => {
+    socket.emit('get all rooms')
+  })
+
+  // after getting all rooms, update the state
+  socket.on('all rooms', (data) => {
     store.dispatch(getRoomsSuccess(data))
   });
 
-  socket.on(types.NEW_ROOM, function (data) {
+  // when new room was added, update the state
+  socket.on('newroom', function (data) {
     store.dispatch(createRoomSuccess(data))
   });
 
+  socket.on('room deleted', function (data) {
+    store.dispatch(deleteRoomSuccess(data))
+  });
 }
 
 const emitEvent = (type, payload) => {

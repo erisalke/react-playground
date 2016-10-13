@@ -1,17 +1,18 @@
 import React from 'react';
 import Button from '../basic/button'
 import store from '../../store';
-import * as types from '../../actions/action-types';
 import { createRoom } from '../../api/room-api'
-import {emitEvent} from '../../api/websockets';
+import { emitEvent } from '../../api/websockets';
+import { createRoomSuccess } from '../../actions/room-actions'
 
 const CreateRoomButton = React.createClass({
   create: function() {
     var room = {
-      name: "pokoj_"
+      name: "generic room name"
     }
-    
-    emitEvent('CREATE_ROOM', room)
+
+    emitEvent('createroom', room)
+    // store.dispatch(createRoomSuccess(room))
   },
 
   render: function() {

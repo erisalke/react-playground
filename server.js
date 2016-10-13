@@ -49,26 +49,35 @@ app.get('*', (req, res) => { res.sendFile(webpackConfig.output.path + '/index.ht
 // *****************
 // * sockets api   *
 // *****************
-import * as types from './app/api/websockets-action-types'
+io.sockets.on('connection', function (socket) {
+  // on connection send to client list of all rooms
+  socket.on('get all rooms', () => {
+    console.log("get all rooms")
+    socket.emit('all rooms', db.rooms)
+  })
 
-io.on('connection', function (socket) {
-  socket.emit(types.ALL_ROOMS, db.rooms);
-
-  socket.on(types.CREATE_ROOM, function (data) {
+  socket.on('createroom', function (data) {
+    console.log("create room ")
     var room = {
       name: data.name,
       id: crypto.randomBytes(20).toString('hex')
     }
     db.rooms.push(room)
-    socket.emit(types.NEW_ROOM, room)
-    socket.broadcast.emit(types.NEW_ROOM, room)
+    socket.emit('newroom', room)
+    socket.broadcast.emit('newroom', room)
   });
 
-  socket.on('chat', function (data) {
-    event = data.event
+  socket.on('delete room', function (data) {
+    console.log("delete room")
+    db.rooms = db.rooms.filter((room) =>{
 
-    socket.emit('chat_messages', data)
-    socket.broadcast.emit('chat_messages', data)
+      if (room.id !== data.roomId)
+        return room;
+    })
+
+
+    socket.broadcast.emit('room deleted', data.roomId)
+    // socket.broadcast.emit('newroom', room)
   });
 });
 
