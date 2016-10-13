@@ -1,2 +1,16 @@
 # react-playground
-Let's go!
+This is small gaming application developed with:
+* ReactJS + Redux
+* Websockets
+* Node, Webpack, Babel + ES6
+
+### Installation
+You will need npm package manager [npm](https://www.npmjs.com/)
+```
+git clone https://github.com/erisalke/react-playground.git
+cd react-playground
+npm install
+npm start
+```
+
+Open browser on [localhost:3001](http://localhost:3001)
