@@ -6,18 +6,22 @@ import { emitEvent } from '../../api/websockets';
 import { createRoomSuccess } from '../../actions/room-actions'
 
 const CreateRoomButton = React.createClass({
-  create: function() {
-    var room = {
-      name: "generic room name"
-    }
-
-    emitEvent('createroom', room)
-    // store.dispatch(createRoomSuccess(room))
-  },
-
   render: function() {
     return (
-      <Button name="Create room" onClick={this.create}/>
+      <div>
+        <input ref={text => {
+          this.input = text;
+        }} />
+        <Button name="Create room" onClick={
+          () => {
+            var room = {
+              name: this.input.value || 'default name'
+            }
+            this.input.value = ''
+            emitEvent('createroom', room)
+          }
+        }/>
+      </div>
     );
   }
 });

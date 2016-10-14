@@ -5,7 +5,7 @@ import { emitEvent } from '../../api/websockets';
 
 // const deleteRoom =
 
-export default function(props) {  
+export default function(props) {
   return (
     <div>
       <h2>room list</h2>
@@ -15,7 +15,12 @@ export default function(props) {
 
           return (
             <li key={room.id} className="list-group-item">
-              <Link to={ "/room/"+room.id } key={room.id} className="details">{room.id}</Link>
+              <Link
+                to={ "/room/"+room.id }
+                key={room.id}
+                className="details">
+                  {room.id}
+              </Link>
               <br/>
               <span> {room.name} </span>
             </li>
