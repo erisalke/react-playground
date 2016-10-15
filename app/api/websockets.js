@@ -5,10 +5,8 @@ import { getRoomsSuccess, createRoomSuccess } from '../actions/room-actions';
 const socket = io.connect('http://localhost:3001', {reconnect: true});
 
 const initSocket = () => {
-  // starting point message
-  // socket.on('connect', () => {
-    socket.emit('get all rooms')
-  // })
+  // ask for initial state (all available rooms)
+  socket.emit('get all rooms')
 
   // after getting all rooms, update the state
   socket.on('all rooms', (data) => {

@@ -67,17 +67,28 @@ io.sockets.on('connection', function (socket) {
     socket.broadcast.emit('newroom', room)
   });
 
+  socket.on('user enters room', function(roomId) {
+    console.log('user enters room')
+    socket.join(roomId)
+    socket.room = roomId;
+    // socket.emit('welcome in room', roomId)
+    console.log("user in room:", socket.room)
+  });
+
+  socket.on('user leaves room', (roomId) => {
+    console.log('user leaves room')
+    socket.leave(socket.room)
+    // socket.emit('welcome in room', roomId)
+    console.log("user left room:", roomId)
+  });
+
   socket.on('delete room', function (data) {
     console.log("delete room")
     db.rooms = db.rooms.filter((room) =>{
-
       if (room.id !== data.roomId)
         return room;
     })
 
-
-    socket.broadcast.emit('room deleted', data.roomId)
-    // socket.broadcast.emit('newroom', room)
   });
 });
 

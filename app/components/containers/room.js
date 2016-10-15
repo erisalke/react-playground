@@ -1,13 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-// import CreateRoomButton from '../views/create-room-button'
-// import RoomList from '../views/room-list';
-// import store from '../../store';
 import Chat from './chat';
-// import CreateRoomButton from './create-room-button'
+import {emitEvent} from '../../api/websockets'
 
 const Room = React.createClass({
+  componentDidMount: function() {
+    emitEvent("user enters room", this.props.params.roomId)
+  },
+
+  componentWillUnmount: function() {
+    emitEvent("user leaves room", this.props.params.roomId)
+  },
+
   render: function() {
     return (
       <div className="home-page">
@@ -23,6 +28,5 @@ const Room = React.createClass({
     );
   }
 });
-
 
 export default Room;
