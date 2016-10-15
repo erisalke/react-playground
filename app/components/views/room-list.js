@@ -11,7 +11,10 @@ export default function(props) {
       <h2>room list</h2>
       <ul className="list-group">
 
-        { props.rooms.map(room => {
+
+        {
+          // console.log(props),
+           props.rooms.map(room => {
 
           return (
             <li key={room.id} className="list-group-item">

@@ -1,7 +1,23 @@
-import { createStore } from 'redux';
-import rooms from './reducers/rooms.js'
+import { createStore, combineReducers } from 'redux';
+import rooms from './reducers/rooms';
+import chat from './reducers/chat';
 
-//const store = createStore(rooms);
-let store = createStore(rooms, window.devToolsExtension && window.devToolsExtension());
+
+
+let rootReducer = (state ={}, action) => {
+  return {
+    rooms: rooms(state.rooms, action),
+    chat: chat(state.chat, action)
+  }
+}
+//
+// combineReducers({
+//   rooms,
+//   chat
+// });
+
+
+let store = createStore(rootReducer, window.devToolsExtension && window.devToolsExtension());
+
 
 export default store;

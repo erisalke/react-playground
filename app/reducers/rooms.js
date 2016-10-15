@@ -1,15 +1,15 @@
 import * as types from '../actions/action-types';
 
-const rooms = (state = {rooms: []}, action) => {
+const rooms = (state = [], action) => {
 
   switch(action.type) {
 
     case types.CREATE_ROOM_SUCCESS:
-      const newState = Object.assign({}, state, { rooms: [...state.rooms, action.room ] });
+      const newState = [ ...state, action.room ];
       return newState;
 
     case types.GET_ROOMS_SUCCESS:
-      return Object.assign({}, state, { rooms: action.rooms });
+      return [ ...action.rooms ];
 
     default:
       return state;

@@ -16,7 +16,7 @@ const compiler = webpack(webpackConfig)
 app.use(webpackDevMiddleware(
   compiler,
   {
-    noInfo: false,
+    noInfo: true,
     path: webpackConfig.output.path,
     publicPath: webpackConfig.output.publicPath
   }
@@ -71,7 +71,9 @@ io.sockets.on('connection', function (socket) {
     console.log('user enters room')
     socket.join(roomId)
     socket.room = roomId;
-    // socket.emit('welcome in room', roomId)
+    socket.emit('update chat', 'welcome in room' + roomId)
+    socket.broadcast.to(socket.room).emit('update chat', 'user X entered the room')
+
     console.log("user in room:", socket.room)
   });
 

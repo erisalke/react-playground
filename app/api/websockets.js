@@ -1,6 +1,8 @@
 import io from 'socket.io-client';
 import store from '../store';
 import { getRoomsSuccess, createRoomSuccess } from '../actions/room-actions';
+import { updateChatSuccess } from '../actions/chat-actions';
+
 
 const socket = io.connect('http://localhost:3001', {reconnect: true});
 
@@ -11,6 +13,10 @@ const initSocket = () => {
   // after getting all rooms, update the state
   socket.on('all rooms', (data) => {
     store.dispatch(getRoomsSuccess(data))
+  });
+
+  socket.on('update chat', function (msg) {
+    store.dispatch(updateChatSuccess(msg))
   });
 
   // when new room was added, update the state
