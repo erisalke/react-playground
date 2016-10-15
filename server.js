@@ -68,30 +68,28 @@ io.sockets.on('connection', function (socket) {
   });
 
   socket.on('user enters room', function(roomId) {
-    console.log('user enters room')
+    console.log("user entered room:", roomId)
+
     socket.join(roomId)
     socket.room = roomId;
-    socket.emit('update chat', 'welcome in room' + roomId)
-    socket.broadcast.to(socket.room).emit('update chat', 'user X entered the room')
-
-    console.log("user in room:", socket.room)
+    socket.emit('update chat', 'welcome in room ' + roomId)
+    socket.broadcast.to(socket.room).emit('update chat', 'user X entered room ' + roomId)
   });
 
   socket.on('user leaves room', (roomId) => {
-    console.log('user leaves room')
-    socket.leave(socket.room)
-    // socket.emit('welcome in room', roomId)
     console.log("user left room:", roomId)
+
+    socket.leave(socket.room)
+    socket.broadcast.to(socket.room).emit('update chat', 'user X left the room')
+    socket.room = ''
   });
 
-  socket.on('delete room', function (data) {
-    console.log("delete room")
-    db.rooms = db.rooms.filter((room) =>{
-      if (room.id !== data.roomId)
-        return room;
-    })
+  socket.on('disconnect', function(){
+    console.log("disconnect")
 
-  });
+		socket.broadcast.to(socket.room).emit('update chat', 'user X left the room via disconnection')
+		socket.leave(socket.room);
+	});
 });
 
 server.listen(3001, function () {
