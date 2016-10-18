@@ -84,6 +84,12 @@ io.sockets.on('connection', function (socket) {
     socket.room = ''
   });
 
+  socket.on('new chat message', (msg) => {
+    console.log("new chat message:", msg)
+
+    socket.broadcast.to(socket.room).emit('update chat', msg)
+  });
+
   socket.on('disconnect', function(){
     console.log("disconnect")
 

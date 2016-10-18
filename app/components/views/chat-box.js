@@ -2,11 +2,15 @@ import React from 'react';
 import { Link } from 'react-router';
 
 export default function(props) {
+  var i =0;
   return (
     <div>
       <ul>
-        <li>some chat message</li>
-        <li>some chat message</li>
+        {
+          props.children.map((el)=>{
+            return <li key={i++}>{el}</li>
+          })
+        }
       </ul>
     </div>
   );

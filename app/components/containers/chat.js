@@ -9,19 +9,17 @@ const Chat = React.createClass({
     return (
       <div>
         <h3>chat</h3>
-        <ChatBox />
+        <ChatBox>{this.props.chat}</ChatBox>
         <ChatInput />
       </div>
     );
   }
 });
 
-// const mapStateToProps = function(store) {
-//   return {
-//     rooms: store.rooms
-//   };
-// };
-//
-// export default connect(mapStateToProps)(Rooms);
+const mapStateToProps = function(store) {
+  return {
+    chat: store.chat
+  };
+};
 
-export default Chat;
+export default connect(mapStateToProps)(Chat);
