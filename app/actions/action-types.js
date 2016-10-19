@@ -6,3 +6,7 @@ export const UPDATE_CHAT_SUCCESS = 'UPDATE_CHAT_SUCCESS';
 export const FLUSH_CHAT_MESSAGES = 'FLUSH_CHAT_MESSAGES';
 
 export const SET_USER_NAME = 'SET_USER_NAME';
+
+
+// Tic Tac Toe actions
+export const SELECT_TILE = 'SELECT_TILE';

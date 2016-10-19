@@ -1,18 +1,30 @@
 import React from 'react';
+import { selectTile } from '../../actions/ticTacToe-actions';
+import store from '../../store';
 
-const TTT = React.createClass({
+const TicTacToe = React.createClass({
+  componentDidMount: function(){
+    store.subscribe(()=> this.forceUpdate())
+  },
+
+  markTile: function(position){
+    console.log(position)
+    store.dispatch(selectTile(position, "X"))
+  },
 
   render: function() {
-    var board = [0,0,0,
-                 0,0,0,
-                 0,0,0]
+    var board = store.getState().ticTacToe;
+
     return (
       <div className = 'main-containerX'>
         <div className = 'boardX'>
           {
-            board.map((tile, i) =>
-                  <div key={i} className='cellX' data-indx = {i} > {i} </div>
-            )
+            board.map((tile, i) =>{
+              // console.log(tile)
+                  return <div key={i} className='cellX' onClick={ ()=>{ this.markTile(i) } }>
+                            {board[i]}
+                         </div>
+            })
           }
         </div>
       </div>
@@ -20,4 +32,4 @@ const TTT = React.createClass({
   }
 });
 
-export default TTT;
+export default TicTacToe;
