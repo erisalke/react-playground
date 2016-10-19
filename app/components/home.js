@@ -10,7 +10,7 @@ const Home = React.createClass({
           Hey hello :)
 
         </p>
-        <TicTacToe/>
+
       </div>
     );
   }

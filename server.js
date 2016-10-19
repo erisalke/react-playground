@@ -69,11 +69,11 @@ io.sockets.on('connection', function (socket) {
 
   socket.on('user enters room', function(roomId) {
     console.log("user entered room:", roomId)
-
+// console.log(socket)
     socket.join(roomId)
     socket.room = roomId;
     socket.emit('update chat', 'welcome in room ' + roomId, 'SERVER')
-    socket.broadcast.to(socket.room).emit('update chat', 'user '+socket.username+' entered room: ' + roomId, 'SERVER')
+    socket.broadcast.to(socket.room).emit('update chat', 'user '+socket.username+' joined the room', 'SERVER')
   });
 
   socket.on('set user name', function(name) {
@@ -95,10 +95,17 @@ io.sockets.on('connection', function (socket) {
     socket.broadcast.to(socket.room).emit('update chat', payload.msg, payload.user)
   });
 
+  socket.on('tile selected', (payload) => {
+    console.log("tile selected:", payload)
+
+    socket.broadcast.to(socket.room).emit('opponent position selected', payload.pos)
+    // socket.emit('opponent position selected', payload.pos)
+  });
+
   socket.on('disconnect', function(){
     console.log("disconnect")
 
-		socket.broadcast.to(socket.room).emit('update chat', 'user '+socket.username+' left the room via disconnection', 'SERVER')
+		socket.broadcast.to(socket.room).emit('update chat', 'user '+socket.username+' disconnected', 'SERVER')
 		socket.leave(socket.room);
 	});
 });

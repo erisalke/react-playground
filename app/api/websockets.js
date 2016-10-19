@@ -3,6 +3,7 @@ import store from '../store';
 import { getRoomsSuccess, createRoomSuccess } from '../actions/room-actions';
 import { updateChatSuccess } from '../actions/chat-actions';
 
+import { selectTile } from '../actions/ticTacToe-actions';
 
 const socket = io.connect('http://localhost:3001', {reconnect: true});
 
@@ -23,6 +24,12 @@ const initSocket = () => {
   socket.on('newroom', function (data) {
     store.dispatch(createRoomSuccess(data))
   });
+
+  socket.on('opponent position selected', function (payload) {
+    console.log("in the websockets",payload)
+    store.dispatch(selectTile(payload, "o"))
+  });
+
 }
 
 const emitEvent = (type, payload) => {

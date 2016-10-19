@@ -1,31 +1,38 @@
 import React from 'react';
-import { selectTile } from '../../actions/ticTacToe-actions';
+import { selectTile, restartGame } from '../../actions/ticTacToe-actions';
+import { emitEvent } from '../../api/websockets';
 import store from '../../store';
 
 const TicTacToe = React.createClass({
   componentDidMount: function(){
-    store.subscribe(()=> this.forceUpdate())
+    console.log("monuted")
+    this.unsubscribe = store.subscribe(()=> this.forceUpdate())
+  },
+
+  componentWillUnmount: function(){
+    console.log("unmonuted")
+    restartGame()
+    this.unsubscribe()
   },
 
   markTile: function(position){
-    console.log(position)
+    console.log("mark tile", position)
     store.dispatch(selectTile(position, "X"))
+    emitEvent('tile selected', {pos:position})
   },
 
   render: function() {
-    var board = store.getState().ticTacToe;
+    const state = store.getState().ticTacToe;
 
     return (
       <div className = 'main-containerX'>
         <div className = 'boardX'>
           {
-            board.map((tile, i) =>{
-              // console.log(tile)
-                  return <div key={i} className='cellX' onClick={ ()=>{ this.markTile(i) } }>
-                            {board[i]}
-                         </div>
+            state.board.map((tile,i) => {
+              return <div className="cellX" key={i} onClick={ ()=>{this.markTile(i)} }>{i}</div>
             })
           }
+
         </div>
       </div>
     );

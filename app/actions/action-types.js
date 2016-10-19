@@ -10,3 +10,4 @@ export const SET_USER_NAME = 'SET_USER_NAME';
 
 // Tic Tac Toe actions
 export const SELECT_TILE = 'SELECT_TILE';
+export const RESTART_GAME = 'RESTART_GAME';
