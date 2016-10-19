@@ -1,0 +1,27 @@
+.main-containerX {
+    height: 100%;
+    width: 900px;
+    margin: 0 auto;
+}
+
+.boardX {
+    height: 420px;
+    width: 420px;
+    margin: 0 auto;
+}
+
+.cellX {
+    width: 140px;
+    height: 140px;
+    border: 2px solid lightskyblue;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    cursor:pointer;
+    float:left;
+    line-height: 140px;
+    text-align: center;
+    font-family: "Arial Narrow";
+    font-weight: bold;
+    font-size: 70px;
+}

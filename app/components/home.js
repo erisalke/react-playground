@@ -1,4 +1,5 @@
 import React from 'react';
+import TicTacToe from './game/tictactoe';
 
 const Home = React.createClass({
   render: function() {
@@ -7,7 +8,9 @@ const Home = React.createClass({
         <h1>React-Redux Playground</h1>
         <p>
           Hey hello :)
+
         </p>
+        <TicTacToe/>
       </div>
     );
   }
