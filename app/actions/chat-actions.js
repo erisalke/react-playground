@@ -6,3 +6,9 @@ export function updateChatSuccess(msg) {
     msg
   };
 }
+
+export function flushChatMessages() {
+  return {
+    type: types.FLUSH_CHAT_MESSAGES,
+  };
+}
