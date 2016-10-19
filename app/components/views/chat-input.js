@@ -14,8 +14,8 @@ export default React.createClass({
         }} />
         <Button name="Send" onClick={
           () => {
-            store.dispatch(updateChatSuccess(this.input.value))
-            emitEvent('new chat message', this.input.value)
+            store.dispatch(updateChatSuccess(this.input.value, this.props.userName))
+            emitEvent('new chat message', {user:this.props.userName, msg:this.input.value})
             this.input.value = ''
           }
         }/>

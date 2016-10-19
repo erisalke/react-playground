@@ -6,7 +6,7 @@ import { emitEvent } from '../../api/websockets';
 export default function(props) {
   return (
     <div>
-      <h2>room list</h2>
+      <h2>Available game rooms</h2>
       <ul className="list-group">
 
         {

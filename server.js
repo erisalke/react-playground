@@ -10,7 +10,7 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
-var db = { rooms: [{"id":1, "name":"default room"}] }
+var db = { rooms: [] }
 
 const compiler = webpack(webpackConfig)
 app.use(webpackDevMiddleware(
@@ -72,28 +72,33 @@ io.sockets.on('connection', function (socket) {
 
     socket.join(roomId)
     socket.room = roomId;
-    socket.emit('update chat', 'welcome in room ' + roomId)
-    socket.broadcast.to(socket.room).emit('update chat', 'user X entered room ' + roomId)
+    socket.emit('update chat', 'welcome in room ' + roomId, 'SERVER')
+    socket.broadcast.to(socket.room).emit('update chat', 'user '+socket.username+' entered room: ' + roomId, 'SERVER')
+  });
+
+  socket.on('set user name', function(name) {
+    console.log("set user name:", name)
+    socket.username = name;
   });
 
   socket.on('user leaves room', (roomId) => {
     console.log("user left room:", roomId)
 
     socket.leave(socket.room)
-    socket.broadcast.to(socket.room).emit('update chat', 'user X left the room')
+    socket.broadcast.to(socket.room).emit('update chat', 'user '+socket.username+' left the room', 'SERVER')
     socket.room = ''
   });
 
-  socket.on('new chat message', (msg) => {
-    console.log("new chat message:", msg)
+  socket.on('new chat message', (payload) => {
+    console.log("new chat message:", payload.msg)
 
-    socket.broadcast.to(socket.room).emit('update chat', msg)
+    socket.broadcast.to(socket.room).emit('update chat', payload.msg, payload.user)
   });
 
   socket.on('disconnect', function(){
     console.log("disconnect")
 
-		socket.broadcast.to(socket.room).emit('update chat', 'user X left the room via disconnection')
+		socket.broadcast.to(socket.room).emit('update chat', 'user '+socket.username+' left the room via disconnection', 'SERVER')
 		socket.leave(socket.room);
 	});
 });

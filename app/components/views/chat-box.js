@@ -8,7 +8,7 @@ export default function(props) {
       <ul>
         {
           props.children.map((el)=>{
-            return <li key={i++}>{el}</li>
+            return <li key={i++}>{el.user}: {el.msg}</li>
           })
         }
       </ul>

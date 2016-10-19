@@ -15,8 +15,8 @@ const initSocket = () => {
     store.dispatch(getRoomsSuccess(data))
   });
 
-  socket.on('update chat', function (msg) {
-    store.dispatch(updateChatSuccess(msg))
+  socket.on('update chat', function (msg, user) {
+    store.dispatch(updateChatSuccess(msg, user))
   });
 
   // when new room was added, update the state

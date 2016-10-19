@@ -5,7 +5,7 @@ const chat = (state = [], action) => {
   switch(action.type) {
 
     case types.UPDATE_CHAT_SUCCESS:
-      return [...state, action.msg ];
+      return [...state, {user:action.user, msg:action.msg} ];
 
     case types.FLUSH_CHAT_MESSAGES:
       return []; //remove all messages
