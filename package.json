@@ -9,7 +9,7 @@
     "start:prod": "npm run build && node server.bundle.js",
     "build:client": "webpack",
     "build": "npm run build:client && npm run build:server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --require tests/setup.js tests/ --recursive *.spec.js"
   },
   "repository": {
     "type": "git",
