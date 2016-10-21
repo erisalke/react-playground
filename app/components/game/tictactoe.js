@@ -25,6 +25,7 @@ const TicTacToe = React.createClass({
     emitEvent('tile selected', {pos:position})
   },
 
+
   render: function() {
     // const state = store.getState().ticTacToe;
 
@@ -33,10 +34,18 @@ const TicTacToe = React.createClass({
         <div className = 'boardX'>
           {
             this.props.tictactoe.board.map((tile,i) => {
+              var classVariant = ["cell"]
+              if (i === 1 || i === 4 || i === 7) {
+                classVariant.push("cellY")
+              }
+              if (i === 3 || i === 4 || i === 5) {
+                classVariant.push("cellX")
+              }
+
               return (
                 <div
                   key={i}
-                  className="cellX"
+                  className={classVariant.join(" ")}
                   onClick={ ()=>{this.markTile(i)} }>
                     {tile}
                 </div>

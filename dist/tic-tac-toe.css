@@ -8,12 +8,12 @@
     height: 420px;
     width: 420px;
     margin: 0 auto;
+    border-width: 0;
 }
 
-.cellX {
+.cell {
     width: 140px;
     height: 140px;
-    border: 2px solid lightskyblue;
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -24,4 +24,14 @@
     font-family: "Arial Narrow";
     font-weight: bold;
     font-size: 70px;
+}
+
+.cellX {
+  border-top: 2px solid lightskyblue;
+  border-bottom: 2px solid lightskyblue;
+}
+
+.cellY {
+    border-left: 2px solid lightskyblue;
+    border-right: 2px solid lightskyblue;
 }
