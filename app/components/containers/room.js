@@ -18,7 +18,10 @@ const Room = React.createClass({
 
   componentWillUnmount: function() {
     store.dispatch(flushChatMessages())
-    emitEvent("user leaves room", this.props.params.roomId)
+    emitEvent("user leaves room", {
+      user: this.props.user,
+      roomId: this.props.params.roomId
+    })
   },
 
   name: function(){

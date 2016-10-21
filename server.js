@@ -65,10 +65,23 @@ var getPlayersInRoom = function(roomId) {
       return room
     }
   })
-
   console.log("resopnse from get players", response)
   return response.players
 }
+
+var removePlayerFromRoom = function(data) {
+  db = { rooms:
+    db.rooms.map((room)=>{
+        if (room.id === data.roomId){
+          room.players = room.players.filter((player)=>{
+            return (data.user.id !== player.id)
+          })
+        }
+        return room
+      })
+  }
+}
+
 
 // *****************
 // * sockets api   *
@@ -114,12 +127,18 @@ io.sockets.on('connection', function (socket) {
     socket.username = name;
   });
 
-  socket.on('user leaves room', (roomId) => {
-    console.log("user left room:", roomId)
+  socket.on('user leaves room', (data) => {
+    console.log("user left room:", data)
+    removePlayerFromRoom(data)
+
+    var responsePlayers = getPlayersInRoom(data.roomId);
+    socket.emit('update player list', responsePlayers)
+    socket.broadcast.to(socket.room).emit('update player list', responsePlayers)
 
     socket.leave(socket.room)
     socket.broadcast.to(socket.room).emit('update chat', 'user '+socket.username+' left the room', 'SERVER')
     socket.room = ''
+
   });
 
   socket.on('new chat message', (payload) => {
