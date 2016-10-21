@@ -2,7 +2,9 @@ import * as types from '../actions/action-types';
 
 const initialState = () => {
   return {
-    board: [0,1,2,3,4,5,6,7,8],
+    board: ["","","",
+            "","","",
+            "","",""],
     turn: 0,
     upToPlayers: 2,
     nextMove: 0,
@@ -13,6 +15,11 @@ const initialState = () => {
 const ticTacToe = (state = initialState(), action) => {
 
   switch(action && action.type) {
+
+    case types.UPDATE_PLAYERS_LIST:
+      return Object.assign({}, state, {
+          players: [ ...action.players],
+      });
 
     case types.RESTART_GAME:
       return initialState();

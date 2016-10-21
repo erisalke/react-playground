@@ -1,18 +1,22 @@
 import React from 'react';
-import { selectTile, restartGame } from '../../actions/ticTacToe-actions';
+import { connect } from 'react-redux';
+import { selectTile, restartGame, userJoinsTheGame }
+  from '../../actions/ticTacToe-actions';
 import { emitEvent } from '../../api/websockets';
 import store from '../../store';
 
 const TicTacToe = React.createClass({
   componentDidMount: function(){
     console.log("monuted")
-    this.unsubscribe = store.subscribe(()=> this.forceUpdate())
+    // store.dispatch(userJoinsTheGame(this.props.user))
+    // emitEvent('user joins the game', this.props.user)
+    // this.unsubscribe = store.subscribe(()=> this.forceUpdate())
   },
 
   componentWillUnmount: function(){
     console.log("unmonuted")
-    restartGame()
-    this.unsubscribe()
+    store.dispatch(restartGame())
+    // this.unsubscribe()
   },
 
   markTile: function(position){
@@ -22,14 +26,21 @@ const TicTacToe = React.createClass({
   },
 
   render: function() {
-    const state = store.getState().ticTacToe;
+    // const state = store.getState().ticTacToe;
 
     return (
       <div className = 'main-containerX'>
         <div className = 'boardX'>
           {
-            state.board.map((tile,i) => {
-              return <div className="cellX" key={i} onClick={ ()=>{this.markTile(i)} }>{i}</div>
+            this.props.tictactoe.board.map((tile,i) => {
+              return (
+                <div
+                  key={i}
+                  className="cellX"
+                  onClick={ ()=>{this.markTile(i)} }>
+                    {tile}
+                </div>
+              )
             })
           }
 
@@ -39,4 +50,12 @@ const TicTacToe = React.createClass({
   }
 });
 
-export default TicTacToe;
+const mapStateToProps = function(store) {
+  console.log("THE STORE:",store)
+  return {
+    tictactoe: store.ticTacToe,
+    user: store.user,
+  };
+};
+
+export default connect(mapStateToProps)(TicTacToe);

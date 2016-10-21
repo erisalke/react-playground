@@ -6,3 +6,10 @@ export function setUserName(name) {
     name
   };
 }
+
+export function setUserIdSuccess(id) {
+  return {
+    type: types.SET_USER_ID,
+    id
+  };
+}

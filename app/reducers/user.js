@@ -7,6 +7,9 @@ const user = (state = {}, action) => {
     case types.SET_USER_NAME:
       return Object.assign({}, state, {name: action.name});
 
+    case types.SET_USER_ID:
+      return Object.assign({}, state, {id: action.id});
+
     default:
       return state;
   }

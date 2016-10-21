@@ -13,3 +13,10 @@ export function restartGame() {
     type: types.RESTART_GAME
   };
 }
+
+export function updatePlayerList(players) {
+  return {
+    type: types.UPDATE_PLAYERS_LIST,
+    players
+  };
+}
