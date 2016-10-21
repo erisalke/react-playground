@@ -10,26 +10,24 @@ import TicTacToe from '../game/tictactoe';
 
 const Room = React.createClass({
   componentDidMount: function() {
-    this.unsubscribe = store.subscribe(()=> this.forceUpdate())
-    emitEvent("user enters room", this.props.params.roomId)
+    emitEvent("user enters room", {
+      user: this.props.user,
+      roomId: this.props.params.roomId
+    })
   },
 
   componentWillUnmount: function() {
-    this.unsubscribe();
     store.dispatch(flushChatMessages())
     emitEvent("user leaves room", this.props.params.roomId)
   },
 
   name: function(){
-    return this.props.params.name || "something is wrong here..."
+    console.log("from room:",this)
+//todo: shall be fixed
+    return this.props.user.name || "something is wrong here..."
   },
 
   render: function() {
-    const state = store.getState().rooms.find(
-      (r) => r.id === this.props.params.roomId
-    )
-
-console.log(state)
     return (
       <div className="home-page">
         <h1>{this.name()}</h1>
@@ -46,4 +44,13 @@ console.log(state)
   }
 });
 
-export default Room;
+
+const mapStateToProps = function(store) {
+  console.log("state to props mapped")
+  return {
+    // rooms: store.rooms,
+    user: store.user
+  };
+};
+
+export default connect(mapStateToProps)(Room);
