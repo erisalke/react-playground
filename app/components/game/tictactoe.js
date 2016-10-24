@@ -21,8 +21,8 @@ const TicTacToe = React.createClass({
 
   markTile: function(position){
     console.log("mark tile", position)
-    store.dispatch(selectTile(position, "X"))
-    emitEvent('tile selected', {pos:position})
+    store.dispatch(selectTile({pos: position, userId: this.props.user.id}))
+    emitEvent('tile selected', {pos: position, userId: this.props.user.id})
   },
 
 

@@ -33,9 +33,10 @@ const initSocket = () => {
     store.dispatch(updatePlayerList(user))
   });
 
+// {pos:position, userId: this.props.user.id}
   socket.on('opponent position selected', function (payload) {
     console.log("in the websockets",payload)
-    store.dispatch(selectTile(payload, "o"))
+    store.dispatch(selectTile(payload))
   });
 
 }

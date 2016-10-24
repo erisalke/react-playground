@@ -148,9 +148,10 @@ io.sockets.on('connection', function (socket) {
   });
 
   socket.on('tile selected', (payload) => {
+    // {pos:position, userId: this.props.user.id}
     console.log("tile selected:", payload)
-
-    socket.broadcast.to(socket.room).emit('opponent position selected', payload.pos)
+    socket.broadcast.to(socket.room).emit(
+      'opponent position selected', payload)
     // socket.emit('opponent position selected', payload.pos)
   });
 

@@ -1,10 +1,9 @@
 import * as types from '../actions/action-types';
 
-export function selectTile(position, sign) {
+export function selectTile(payload) {
   return {
     type: types.SELECT_TILE,
-    position: position,
-    sign: sign
+    payload,
   };
 }
 

@@ -25,10 +25,11 @@ const ticTacToe = (state = initialState(), action) => {
       return initialState();
 
     case types.SELECT_TILE:
+    // {pos: position, userId: this.props.user.id}
       return Object.assign({}, state, {
-          board: [ ...state.board.slice(0, action.position),
-                   action.sign,
-                   ...state.board.slice(action.position+1) ],
+        board: [ ...state.board.slice(0, action.payload.pos),
+                 "X",
+                 ...state.board.slice(action.payload.pos+1) ],
       });
 
     default:
