@@ -1,31 +1,24 @@
 import * as types from '../actions/action-types';
+import { Map, List } from 'immutable';
 
-const initialState = () => ({
-  board: ['', '', '',
-          '', '', '',
-          '', '', ''],
-  turn: 0,
-  upToPlayers: 2,
-  nextMove: 0,
-  players: [], // playerA, playerB
-});
+const initialState = () => {
+  const state = new Map();
+  const newState = state.set('board', List.of('', '', '', '', '', '', '', '', ''));
+  return newState;
+};
 
 const ticTacToe = (state = initialState(), action) => {
   switch (action && action.type) {
-    case types.UPDATE_PLAYERS_LIST:
-      return Object.assign({}, state, {
-        players: [...action.players],
-      });
-
-    case types.RESTART_GAME:
-      return initialState();
-
     case types.SELECT_TILE:
-      return Object.assign({}, state, {
-        board: [...state.board.slice(0, action.payload.pos),
-                 'X',
-                 ...state.board.slice(action.payload.pos + 1)],
-      });
+      {
+        const board = state.get('board');
+        const before = board.slice(0, action.pos);
+        const after = board.slice(action.pos + 1);
+
+        return state.merge({
+          board: [...before, 'X', ...after],
+        });
+      }
 
     default:
       return state;
