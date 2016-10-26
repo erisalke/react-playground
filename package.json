@@ -9,7 +9,7 @@
     "start:prod": "npm run build && node server.bundle.js",
     "build:client": "webpack",
     "build": "npm run build:client && npm run build:server",
-    "test": "mocha --require tests/setup.js tests/ --recursive *.spec.js"
+    "test": "mocha --compilers js:babel-core/register --require ./tests/test_helper.js 'tests/**/*@(spec.js)'"
   },
   "repository": {
     "type": "git",
@@ -31,6 +31,7 @@
     "babel-preset-stage-2": "^6.13.0",
     "babel-register": "^6.16.3",
     "body-parser": "^1.15.2",
+    "chai-immutable": "^1.6.0",
     "css-loader": "^0.25.0",
     "eslint-config-airbnb": "^12.0.0",
     "html-webpack-plugin": "^2.22.0",
@@ -45,11 +46,13 @@
   },
   "dependencies": {
     "axios": "^0.14.0",
+    "chai": "^3.5.0",
     "compression": "^1.6.2",
     "crypto": "0.0.3",
     "express": "^4.14.0",
     "express-ws": "^2.0.0",
     "if-env": "^1.0.0",
+    "immutable": "^3.8.1",
     "react": "^15.3.2",
     "react-router": "^2.8.0",
     "socket.io": "^1.5.0",
