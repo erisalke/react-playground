@@ -1,10 +1,10 @@
-import React from 'react'
-import { Route, Router, browserHistory, IndexRoute } from 'react-router'
-import MainLayout from './components/layouts/main-layout.js'
-import Home from './components/home.js'
-import About from './components/containers/about.js'
-import Rooms from './components/containers/rooms.js'
-import Room from './components/containers/room.js'
+import React from 'react';
+import { Route, Router, browserHistory, IndexRoute } from 'react-router';
+import MainLayout from './components/layouts/main-layout';
+import Home from './components/home';
+import About from './components/containers/about';
+import Rooms from './components/containers/rooms';
+import Room from './components/containers/room';
 
 export default (
   <Router history={browserHistory}>

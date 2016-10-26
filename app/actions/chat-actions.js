@@ -4,7 +4,7 @@ export function updateChatSuccess(msg, user) {
   return {
     type: types.UPDATE_CHAT_SUCCESS,
     msg,
-    user
+    user,
   };
 }
 

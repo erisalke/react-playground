@@ -9,13 +9,13 @@ export function selectTile(payload) {
 
 export function restartGame() {
   return {
-    type: types.RESTART_GAME
+    type: types.RESTART_GAME,
   };
 }
 
 export function updatePlayerList(players) {
   return {
     type: types.UPDATE_PLAYERS_LIST,
-    players
+    players,
   };
 }

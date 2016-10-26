@@ -6,14 +6,14 @@ import { emitEvent } from '../../api/websockets';
 import store from '../../store';
 
 const TicTacToe = React.createClass({
-  componentDidMount: function(){
+  componentDidMount: function() {
     console.log("monuted")
     // store.dispatch(userJoinsTheGame(this.props.user))
     // emitEvent('user joins the game', this.props.user)
     // this.unsubscribe = store.subscribe(()=> this.forceUpdate())
   },
 
-  componentWillUnmount: function(){
+  componentWillUnmount: function() {
     console.log("unmonuted")
     store.dispatch(restartGame())
     // this.unsubscribe()
@@ -28,7 +28,7 @@ const TicTacToe = React.createClass({
 
   render: function() {
     // const state = store.getState().ticTacToe;
-
+console.log(this.props)
     return (
       <div className = 'main-containerX'>
         <div className = 'boardX'>
