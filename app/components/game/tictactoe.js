@@ -30,29 +30,36 @@ const TicTacToe = React.createClass({
     // const state = store.getState().ticTacToe;
 console.log(this.props)
     return (
-      <div className = 'main-containerX'>
-        <div className = 'boardX'>
-          {
-            this.props.tictactoe.board.map((tile,i) => {
-              var classVariant = ["cell"]
-              if (i === 1 || i === 4 || i === 7) {
-                classVariant.push("cellY")
-              }
-              if (i === 3 || i === 4 || i === 5) {
-                classVariant.push("cellX")
-              }
+      <div>
+        <div>
+          nextTurn: {this.props.tictactoe.nextTurn }
+          <br/>
+          myId: {this.props.user.id }
+        </div>
+        <div className = 'main-containerX'>
+          <div className = 'boardX'>
+            {
+              this.props.tictactoe.board.map((tile,i) => {
+                var classVariant = ["cell"]
+                if (i === 1 || i === 4 || i === 7) {
+                  classVariant.push("cellY")
+                }
+                if (i === 3 || i === 4 || i === 5) {
+                  classVariant.push("cellX")
+                }
 
-              return (
-                <div
-                  key={i}
-                  className={classVariant.join(" ")}
-                  onClick={ ()=>{this.markTile(i)} }>
-                    {tile}
-                </div>
-              )
-            })
-          }
+                return (
+                  <div
+                    key={i}
+                    className={classVariant.join(" ")}
+                    onClick={ ()=>{this.markTile(i)} }>
+                      {tile}
+                  </div>
+                )
+              })
+            }
 
+          </div>
         </div>
       </div>
     );

@@ -13,3 +13,6 @@ export const SET_USER_ID = 'SET_USER_ID';
 export const SELECT_TILE = 'SELECT_TILE';
 export const RESTART_GAME = 'RESTART_GAME';
 export const UPDATE_PLAYERS_LIST = 'UPDATE_PLAYERS_LIST';
+export const ADD_PLAYER = 'ADD_PLAYER';
+
+export const SWITCH_TURN = 'SWITCH_TURN';
