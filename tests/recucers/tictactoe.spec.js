@@ -14,6 +14,7 @@ describe('tictactoe reducer', () => {
             ['', '', '',
               '', '', '',
               '', '', ''],
+			gameWinner: ''
     });
     expect(initialState).to.equal(undefined);
   });
@@ -33,36 +34,38 @@ describe('tictactoe reducer', () => {
   });
 
   it('selects tile correctly', () => {
-    const initialState = {
-      board: ['', '', '', '', '', '', '', '', ''],
-    };
-
     const action = { type: 'SELECT_TILE', data: { pos: 2, userId: 123 } };
-    const nextState = reducer(initialState, action);
+    const nextState = reducer(undefined, action);
 
     expect(nextState).to.deep.equal({
       board: ['', '', 123, '', '', '', '', '', ''],
+			nextMove: '',
+			gameWinner: '',
+			players: [],
     });
   });
 
   it('switches turn correctly', () => {
     const initialState = {
+			board: ['', '', '', '', '', '', '', '', ''],
       players: [
         { id: 111, name: 'bob' },
         { id: 222, name: 'joe' },
       ],
-      nextTurn: 111,
+      nextMove: 111,
     };
 
-    const action = { type: 'SWITCH_TURN', userIdEndTurn: 111 };
+    const action = { type: 'SELECT_TILE', data: { pos: 7, userId: 111 } };
     const nextState = reducer(initialState, action);
 
     expect(nextState).to.deep.equal({
+			board: ['', '', '', '', '', '', '', 111, ''],
       players: [
         { id: 111, name: 'bob' },
         { id: 222, name: 'joe' },
       ],
-      nextTurn: 222,
+			gameWinner: '',
+      nextMove: { id: 222, name: 'joe' },
     });
   });
 
@@ -80,8 +83,9 @@ describe('tictactoe reducer', () => {
       board: [123, '', '',
               '', 123, '',
               '', '', 123],
-
-      winner: 123,
+			nextMove: '',
+      gameWinner: 123,
+			players: [],
     });
 
   });

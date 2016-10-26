@@ -2,67 +2,72 @@ import _ from 'lodash';
 import * as types from '../actions/action-types';
 
 
-const initialState = () => ({ board: ['', '', '', '', '', '', '', '', ''] });
+const initialState = () => ({
+	board: ['', '', '', '', '', '', '', '', ''],
+	gameWinner: ''
+});
 
-const checkWinningMove = (board, userId) => {
-  const winningRows = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ];
+const nextMove = (players=[], action) => {
+	switch (action.type) {
+		case types.SELECT_TILE:
+			const nextPlayer = players.find( p => p.id !== action.data.userId )
+			return nextPlayer || ''
+		default:
+			return '';
+	}
+};
 
-  const allPositions = board.reduce((result, next, index) => {
-    if (next === userId) {
-      result.push(index);
-    }
-    return result;
-  }, []);
+const board = (board = ['', '', '', '', '', '', '', '', ''], action) => {
+	switch (action.type) {
+		case types.SELECT_TILE:
+			return [
+				...board.slice(0, action.data.pos),
+				action.data.userId,
+				...board.slice(action.data.pos + 1),
+			]
+		default:
+			return board;
+	}
+};
 
-// go through all winningRows searching for first which fully matches allPositions
-  const solution = winningRows.find(row =>
-     row.every(elem => allPositions.indexOf(elem) > -1)
-  );
+const gameWinner = (board, action) => {
+	const winningRows = [
+		[0, 1, 2], [3, 4, 5], [6, 7, 8],
+		[0, 3, 6], [1, 4, 7], [2, 5, 8],
+		[0, 4, 8], [2, 4, 6],
+	];
 
-  return solution;
+	const allPositions = board.reduce((result, next, index) => {
+		if (next === action.data.userId) {
+			result.push(index);
+		}
+		return result;
+	}, [action.data.pos]);
+
+	switch (action.type) {
+		case types.SELECT_TILE:
+			{
+				// go through all winningRows searching for first which fully matches allPositions
+				if (winningRows.some(row =>
+			     row.every(elem => allPositions.indexOf(elem) > -1))) {
+						 return action.data.userId
+					 }
+			}
+		default:
+			return '';
+	}
 };
 
 const ticTacToe = (state = initialState(), action) => {
   switch (action && action.type) {
-    case types.SELECT_TILE:
-      {
-        const id = action.data.userId;
-        const before = state.board.slice(0, action.data.pos);
-        const after = state.board.slice(action.data.pos + 1);
-        const newBoard = [...before, id, ...after];
 
-        const winning = checkWinningMove(newBoard, id);
-
-        if (winning) {
-          return _.assign({}, state,
-            {
-              board: newBoard,
-              winner: id,
-            });
-        }
-
-        return _.assign({}, state,
-          {
-            board: newBoard,
-          });
-      }
-
-    case types.SWITCH_TURN:
-      {
-        return _.assign({}, state,
-          {
-            nextTurn: state.players.find(p => p.id !== action.userIdEndTurn).id,
-          });
-      }
+		case types.SELECT_TILE:
+      return {
+				board: board(state.board, action),
+				gameWinner: gameWinner(state.board, action),
+				nextMove: nextMove(state.players, action),
+				players: state.players || []
+			}
 
     case types.ADD_PLAYER:
       {
