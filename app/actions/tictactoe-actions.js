@@ -13,9 +13,9 @@ export function restartGame() {
   };
 }
 
-export function updatePlayerList(players) {
+export function updatePlayerList(user) {
   return {
-    type: types.UPDATE_PLAYERS_LIST,
-    players,
+    type: types.ADD_PLAYER,
+    user,
   };
 }

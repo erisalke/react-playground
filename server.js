@@ -117,9 +117,9 @@ io.sockets.on('connection', function (socket) {
     socket.emit('update chat', 'welcome in room ' + data.roomId, 'SERVER')
     socket.broadcast.to(socket.room).emit('update chat', 'user '+data.user+' joined the room', 'SERVER')
 
-    var responsePlayers = getPlayersInRoom(data.roomId);
-    socket.emit('update player list', responsePlayers)
-    socket.broadcast.to(socket.room).emit('update player list', responsePlayers)
+    // var responsePlayers = getPlayersInRoom(data.roomId);
+    // socket.emit('update player list', data.user)
+    socket.broadcast.to(socket.room).emit('update player list', data.user)
   });
 
   socket.on('set user name', function(name) {

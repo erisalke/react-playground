@@ -14,7 +14,8 @@ describe('tictactoe reducer', () => {
             ['', '', '',
               '', '', '',
               '', '', ''],
-			gameWinner: ''
+			gameWinner: '',
+			players: [],
     });
     expect(initialState).to.equal(undefined);
   });
@@ -22,7 +23,7 @@ describe('tictactoe reducer', () => {
   it('adds a user to player list', () => {
     const initialState = { players: [{ id: 1, name: 'bob' }] };
 
-    const action = { type: 'ADD_PLAYER', data: { id: 2, name: 'joe' } };
+    const action = { type: 'ADD_PLAYER', user: { id: 2, name: 'joe' } };
     const nextState = reducer(initialState, action);
 
     expect(nextState).to.deep.equal({
@@ -65,7 +66,7 @@ describe('tictactoe reducer', () => {
         { id: 222, name: 'joe' },
       ],
 			gameWinner: '',
-      nextMove: { id: 222, name: 'joe' },
+      nextMove: 222,
     });
   });
 
@@ -74,6 +75,7 @@ describe('tictactoe reducer', () => {
       board: ['', '', '',
               '', 123, '',
               '', '', 123],
+			players: [],
     };
 
     const action = { type: 'SELECT_TILE', data: { pos: 0, userId: 123 } };

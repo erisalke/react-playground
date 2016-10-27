@@ -4,14 +4,29 @@ import * as types from '../actions/action-types';
 
 const initialState = () => ({
 	board: ['', '', '', '', '', '', '', '', ''],
-	gameWinner: ''
+	gameWinner: '',
+	players: [],
 });
 
-const nextMove = (players=[], action) => {
+const nextMove = (state, action) => {
 	switch (action.type) {
 		case types.SELECT_TILE:
-			const nextPlayer = players.find( p => p.id !== action.data.userId )
-			return nextPlayer || ''
+			{
+				const nextPlayer = state.players.find( p => p.id !== action.data.userId )
+				if (nextPlayer !== undefined) {
+					return nextPlayer.id;
+				}
+				return '';
+			}
+
+		case types.ADD_PLAYER:
+			{
+				if (state.nextMove !== ''){
+					return state.nextMove
+				}
+				return action.user.id
+			}
+
 		default:
 			return '';
 	}
@@ -65,13 +80,13 @@ const ticTacToe = (state = initialState(), action) => {
       return {
 				board: board(state.board, action),
 				gameWinner: gameWinner(state.board, action),
-				nextMove: nextMove(state.players, action),
+				nextMove: nextMove(state, action),
 				players: state.players || []
 			}
 
     case types.ADD_PLAYER:
       {
-        const result = _.assign({}, state, { players: [...state.players, action.data] });
+        const result = _.assign({}, state, { players: [...state.players, action.user] });
         return result;
       }
 

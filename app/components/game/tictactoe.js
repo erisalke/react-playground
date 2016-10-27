@@ -9,7 +9,7 @@ const TicTacToe = React.createClass({
   componentDidMount: function(){
     console.log("monuted")
     // store.dispatch(userJoinsTheGame(this.props.user))
-    // emitEvent('user joins the game', this.props.user)
+    // emitEvent('user joins the game', {user: this.props.user)
     // this.unsubscribe = store.subscribe(()=> this.forceUpdate())
   },
 
@@ -64,7 +64,7 @@ const mapStateToProps = function(store) {
   console.log("THE STORE:", store)
   return {
     tictactoe: store.ticTacToe,
-    user: store.user,
+    user: store.user
   };
 };
 
