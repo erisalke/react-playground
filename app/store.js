@@ -1,17 +1,9 @@
-import { createStore, combineReducers } from 'redux';
-import rooms from './reducers/rooms';
-import chat from './reducers/chat';
-import user from './reducers/user';
-import ticTacToe from './reducers/ticTacToe';
+import { createStore } from 'redux';
+import { clientRoot } from './reducers/root-reducer';
 
-
-let rootReducer = combineReducers({
-    rooms,
-    chat,
-    user,
-    ticTacToe
-  })
-
-let store = createStore(rootReducer, window.devToolsExtension && window.devToolsExtension());
+let store = createStore(
+	clientRoot,
+	window.devToolsExtension && window.devToolsExtension()
+);
 
 export default store;

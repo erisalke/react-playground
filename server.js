@@ -3,16 +3,16 @@ import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackConfig from './webpack.server.config';
 import crypto from 'crypto';
+import { createStore, combineReducers } from 'redux';
+import { allCombined } from './app/reducers/root-reducer';
+
+let store = createStore(allCombined);
 
 var express = require('express');
 var bodyParser = require('body-parser').json();
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
-
-// var debug = require('debug');
-
-var db = { rooms: [] }
 
 const compiler = webpack(webpackConfig)
 app.use(webpackDevMiddleware(
@@ -22,147 +22,32 @@ app.use(webpackDevMiddleware(
     path: webpackConfig.output.path,
     publicPath: webpackConfig.output.publicPath
   }
-))
+));
 app.use(webpackHotMiddleware(compiler))
-
 app.use('/static', express.static('dist'))
-
-
-// *****************
-// * web api       *
-// *****************
-// app.get('/api/rooms', function (req, res) {
-//   console.log(db.rooms)
-//   res.json(db.rooms);
-// });
-
-// app.post('/api/rooms', bodyParser, function (req, res) {
-//   var room = {
-//     name: req.body.name,
-//     id: crypto.randomBytes('20').toString('hex')
-//   }
-//   db.rooms.push(room);
-//   res.json(room);
-// });
-
 app.get('*', (req, res) => { res.sendFile(webpackConfig.output.path + '/index.html'); })
 
+io.on('connection', (socket) => {
+	socket.emit('initial state', store.getState())
 
-var addPlayerToRoom = function(player,roomId) {
-  db = { rooms:
-    db.rooms.map((room) => {
-      if (room.id === roomId){
-        room.players.push(player)
-      }
-      return room
-    })
-  }
-}
+	// client actions passing by
+	socket.on('action', (action) => {
+		console.log()
+		console.log("ACTION")
+		console.log(action)
 
-var getPlayersInRoom = function(roomId) {
-  var response = db.rooms.find((room) => {
-    if (room.id === roomId){
-      return room
-    }
-  })
-  console.log("resopnse from get players", response)
-  return response.players
-}
+		// save in server store
+		store.dispatch(action)
 
-var removePlayerFromRoom = function(data) {
-  db = { rooms:
-    db.rooms.map((room)=>{
-        if (room.id === data.roomId){
-          room.players = room.players.filter((player)=>{
-            return (data.user.id !== player.id)
-          })
-        }
-        return room
-      })
-  }
-}
+		// broadcast to all listeners
+		socket.broadcast.emit("action", action)
 
-
-// *****************
-// * sockets api   *
-// *****************
-io.sockets.on('connection', function (socket) {
-  // on connection send to client list of all rooms
-  socket.on('get all rooms', () => {
-    console.log("get all rooms")
-    socket.emit('all rooms', db.rooms)
-    socket.emit('set user ID', socket.id)
-  })
-
-  socket.on('createroom', function (data) {
-    console.log("create room ")
-    var room = {
-      id: crypto.randomBytes(20).toString('hex'),
-      name: data.name,
-      players: [],
-    }
-    db.rooms.push(room)
-    socket.emit('newroom', room)
-    socket.broadcast.emit('newroom', room)
-  });
-
-  socket.on('user enters room', function(data) {
-    console.log('user enters room:', data)
-
-    socket.join(data.roomId)
-    socket.room = data.roomId;
-
-    addPlayerToRoom(data.user, data.roomId)
-
-    socket.emit('update chat', 'welcome in room ' + data.roomId, 'SERVER')
-    socket.broadcast.to(socket.room).emit('update chat', 'user '+data.user+' joined the room', 'SERVER')
-
-    // var responsePlayers = getPlayersInRoom(data.roomId);
-    // socket.emit('update player list', data.user)
-    socket.broadcast.to(socket.room).emit('update player list', data.user)
-  });
-
-  socket.on('set user name', function(name) {
-    console.log("set user name:", name)
-    socket.username = name;
-  });
-
-  socket.on('user leaves room', (data) => {
-    console.log("user left room:", data)
-    removePlayerFromRoom(data)
-
-    var responsePlayers = getPlayersInRoom(data.roomId);
-    socket.emit('update player list', responsePlayers)
-    socket.broadcast.to(socket.room).emit('update player list', responsePlayers)
-
-    socket.leave(socket.room)
-    socket.broadcast.to(socket.room).emit('update chat', 'user '+socket.username+' left the room', 'SERVER')
-    socket.room = ''
-
-  });
-
-  socket.on('new chat message', (payload) => {
-    console.log("new chat message:", payload.msg)
-
-    socket.broadcast.to(socket.room).emit('update chat', payload.msg, payload.user)
-  });
-
-  socket.on('tile selected', (payload) => {
-    // {pos:position, userId: this.props.user.id}
-    console.log("tile selected:", payload)
-    socket.broadcast.to(socket.room).emit(
-      'opponent position selected', payload)
-    // socket.emit('opponent position selected', payload.pos)
-  });
-
-  socket.on('disconnect', function(){
-    console.log("disconnect")
-
-		socket.broadcast.to(socket.room).emit('update chat', 'user '+socket.username+' disconnected', 'SERVER')
-		socket.leave(socket.room);
+		console.log()
+		console.log("SERVERSIDE STORE STATE:")
+	 	console.log(store.getState())
 	});
 });
 
-server.listen(3001, function () {
-  console.log('Listening on port 3001!');
+server.listen(8080, function () {
+  console.log('Listening on port 8080!');
 });

@@ -4,6 +4,7 @@ import store from '../../store';
 import { createRoom } from '../../api/room-api'
 import { emitEvent } from '../../api/websockets';
 import { createRoomSuccess } from '../../actions/room-actions'
+import crypto from 'crypto';
 
 const CreateRoomButton = React.createClass({
   render: function() {
@@ -15,10 +16,13 @@ const CreateRoomButton = React.createClass({
         <Button name="Create room" onClick={
           () => {
             var room = {
+							id: crypto.randomBytes(24).toString('hex'),
               name: this.input.value || 'default name'
             }
             this.input.value = ''
-            emitEvent('createroom', room)
+
+						store.dispatch(createRoomSuccess(room))
+						emitEvent('action', createRoomSuccess(room))
           }
         }/>
       </div>
