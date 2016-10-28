@@ -105,6 +105,28 @@ describe('tictactoe reducer', () => {
     });
   });
 
+	it('multiple select tile, doesnt break the player list', () => {
+		const initialState = {
+			board: ['', '', '', '', '', '', '', '', ''],
+			players: [{ id: 100, name: 'bob', isHost:true  },
+								{ id: 200, name: 'joe', }]
+							};
+
+		const actions = [	{ type: 'SELECT_TILE', data: { pos: 0, userId: 100 } },
+											{ type: 'SELECT_TILE', data: { pos: 1, userId: 200 } },
+											{ type: 'SELECT_TILE', data: { pos: 2, userId: 100 } },
+											{ type: 'SELECT_TILE', data: { pos: 3, userId: 200 } },
+											{ type: 'SELECT_TILE', data: { pos: 4, userId: 100 } },	];
+		const nextState = actions.reduce(
+			(state, action) => reducer(state, action), initialState);
+
+		expect(nextState).to.deep.equal({
+			board: [100,200,100,200,100, '', '', '', ''],
+			players: [{ id: 200, name: 'joe', },
+								{ id: 100, name: 'bob', isHost:true  }]
+		});
+	});
+
   it('spots the winning move', () => {
 		const initialState = {
 			board: [123, '', '',
