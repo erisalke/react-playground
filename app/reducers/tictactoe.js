@@ -4,32 +4,45 @@ import * as types from '../actions/action-types';
 
 const initialState = () => ({
 	board: ['', '', '', '', '', '', '', '', ''],
-	gameWinner: '',
 	players: [],
 });
 
-const nextMove = (state, action) => {
-	switch (action.type) {
-		case types.SELECT_TILE:
-			{
-				const nextPlayer = state.players.find( p => p.id !== action.data.userId )
-				if (nextPlayer !== undefined) {
-					return nextPlayer.id;
-				}
-				return '';
-			}
+const ticTacToe = (state = initialState(), action) => {
+  switch (action && action.type) {
 
 		case types.ADD_PLAYER:
-			{
-				if (state.nextMove !== ''){
-					return state.nextMove
+      {
+				if (state.players.some(p => p.isHost)) {
+					return _.assign({}, state, { players: [...state.players, action.user] });
 				}
-				return action.user.id
+				return _.assign({}, state, { players: [...state.players, {...action.user, isHost:true}] });
+      }
+
+		case types.REMOVE_PLAYER:
+      {
+				return _.assign({}, state, { players: [...state.players.filter(p => p.id !== action.userId)] });
+      }
+
+		case types.SELECT_TILE:
+			{
+				const gameWinner = checkGameWinner(state.board, action)
+				if (gameWinner) {
+					return {
+						board: board(state.board, action),
+						players: [...state.players.slice(1), state.players[0] ],
+						gameWinner
+					}
+				}
+
+	      return {
+					board: board(state.board, action),
+					players: [...state.players.slice(1), state.players[0] ],
+				}
 			}
 
-		default:
-			return '';
-	}
+    default:
+      return state;
+  }
 };
 
 const board = (board = ['', '', '', '', '', '', '', '', ''], action) => {
@@ -45,7 +58,7 @@ const board = (board = ['', '', '', '', '', '', '', '', ''], action) => {
 	}
 };
 
-const gameWinner = (board, action) => {
+const checkGameWinner = (board, action) => {
 	const winningRows = [
 		[0, 1, 2], [3, 4, 5], [6, 7, 8],
 		[0, 3, 6], [1, 4, 7], [2, 5, 8],
@@ -68,32 +81,10 @@ const gameWinner = (board, action) => {
 						 return action.data.userId
 					 }
 			}
+
 		default:
-			return '';
+			return undefined;
 	}
 };
-
-const ticTacToe = (state = initialState(), action) => {
-  switch (action && action.type) {
-
-		case types.SELECT_TILE:
-      return {
-				board: board(state.board, action),
-				gameWinner: gameWinner(state.board, action),
-				nextMove: nextMove(state, action),
-				players: state.players || []
-			}
-
-    case types.ADD_PLAYER:
-      {
-        const result = _.assign({}, state, { players: [...state.players, action.user] });
-        return result;
-      }
-
-    default:
-      return state;
-  }
-};
-
 
 export default ticTacToe;

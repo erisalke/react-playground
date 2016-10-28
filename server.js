@@ -9,7 +9,7 @@ var bodyParser = require('body-parser').json();
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
-var forwarded = require('forwarded-for');
+
 // var debug = require('debug');
 
 var db = { rooms: [] }

@@ -4,23 +4,43 @@ import reducer from '../../app/reducers/tictactoe';
 
 describe('tictactoe reducer', () => {
   it('returns initial state', () => {
-    const initialState = undefined;
-    const action = { type: 'any' };
+    const nextState = reducer(undefined, {type: 'any'});
+    expect(nextState).to.deep.equal({
+      board: ['', '', '',
+              '', '', '',
+              '', '', ''],
+			players: [],
+    });
+  });
 
+	it('adds a user to an empty player list, results with host user added', () => {
+    const initialState = { players: [] };
+
+    const action = { type: 'ADD_PLAYER', user: { id: 123, name: 'joe' } };
     const nextState = reducer(initialState, action);
 
     expect(nextState).to.deep.equal({
-      board:
-            ['', '', '',
-              '', '', '',
-              '', '', ''],
-			gameWinner: '',
-			players: [],
+      players: [
+        { id: 123, name: 'joe', isHost: true },
+      ],
     });
-    expect(initialState).to.equal(undefined);
   });
 
-  it('adds a user to player list', () => {
+	it('adds a user to a host player list, results with normal user added', () => {
+		const initialState = { players: [{ id: 1, name: 'bob', isHost:true  }] };
+
+		const action = { type: 'ADD_PLAYER', user: { id: 2, name: 'joe' } };
+		const nextState = reducer(initialState, action);
+
+		expect(nextState).to.deep.equal({
+			players: [
+				{ id: 1, name: 'bob', isHost:true  },
+				{ id: 2, name: 'joe'},
+			],
+		});
+	});
+
+  it('adds a user to a non-host player list, results with host added', () => {
     const initialState = { players: [{ id: 1, name: 'bob' }] };
 
     const action = { type: 'ADD_PLAYER', user: { id: 2, name: 'joe' } };
@@ -29,67 +49,82 @@ describe('tictactoe reducer', () => {
     expect(nextState).to.deep.equal({
       players: [
         { id: 1, name: 'bob' },
-        { id: 2, name: 'joe' },
+        { id: 2, name: 'joe', isHost:true },
       ],
     });
   });
 
-  it('selects tile correctly', () => {
-    const action = { type: 'SELECT_TILE', data: { pos: 2, userId: 123 } };
-    const nextState = reducer(undefined, action);
+	it('removes a non-host user from player list, results with a host remaining', () => {
+		const initialState = {
+			players: [{ id: 123, name: 'bob', isHost:true  },
+								{ id: 2, name: 'joe', }]
+						};
 
-    expect(nextState).to.deep.equal({
-      board: ['', '', 123, '', '', '', '', '', ''],
-			nextMove: '',
-			gameWinner: '',
-			players: [],
-    });
-  });
+		const action = { type: 'REMOVE_PLAYER', userId: 2 };
+		const nextState = reducer(initialState, action);
 
-  it('switches turn correctly', () => {
-    const initialState = {
+		expect(nextState).to.deep.equal({
+			players: [
+				{ id: 123, name: 'bob', isHost:true  },
+			],
+		});
+	});
+
+	it('removes a host user and adds a new user to player list, results with a host', () => {
+		const initialState = {
+			players: [{ id: 123, name: 'bob', isHost:true  },
+								{ id: 2, name: 'joe', }]
+						};
+
+		const actionRemove = { type: 'REMOVE_PLAYER', userId: 123 };
+		const actionAdd = { type: 'ADD_PLAYER', user: { id: 321, name: 'Lucy' } };
+		const nextState = reducer(reducer(initialState, actionRemove), actionAdd);
+
+		expect(nextState).to.deep.equal({
+			players: [
+				{ id: 2, name: 'joe', },
+				{ id: 321, name: 'Lucy', isHost:true  },
+			],
+		});
+	});
+
+  it('select tile, marks the tile with userId and rotates the players array', () => {
+		const initialState = {
 			board: ['', '', '', '', '', '', '', '', ''],
-      players: [
-        { id: 111, name: 'bob' },
-        { id: 222, name: 'joe' },
-      ],
-      nextMove: 111,
-    };
+			players: [{ id: 1, name: 'bob', isHost:true  },
+								{ id: 2, name: 'joe', }]
+							};
 
-    const action = { type: 'SELECT_TILE', data: { pos: 7, userId: 111 } };
+    const action = { type: 'SELECT_TILE', data: { pos: 2, userId: 1 } };
     const nextState = reducer(initialState, action);
 
     expect(nextState).to.deep.equal({
-			board: ['', '', '', '', '', '', '', 111, ''],
-      players: [
-        { id: 111, name: 'bob' },
-        { id: 222, name: 'joe' },
-      ],
-			gameWinner: '',
-      nextMove: 222,
+      board: ['', '', 1, '', '', '', '', '', ''],
+			players: [{ id: 2, name: 'joe', },
+								{ id: 1, name: 'bob', isHost:true  }]
     });
   });
 
   it('spots the winning move', () => {
-    const initialState = {
-      board: ['', '', '',
-              '', 123, '',
+		const initialState = {
+			board: [123, '', '',
+              '', '', '',
               '', '', 123],
-			players: [],
-    };
+			players: [{ id: 123, name: 'bob', isHost:true  },
+								{ id: 999, name: 'joe', }]
+							};
 
-    const action = { type: 'SELECT_TILE', data: { pos: 0, userId: 123 } };
+    const action = { type: 'SELECT_TILE', data: { pos: 4, userId: 123 } };
     const nextState = reducer(initialState, action);
 
     expect(nextState).to.deep.equal({
       board: [123, '', '',
               '', 123, '',
               '', '', 123],
-			nextMove: '',
       gameWinner: 123,
-			players: [],
+			players: [{ id: 999, name: 'joe', },
+								{ id: 123, name: 'bob', isHost:true  },
+								],
     });
-
   });
-
 });

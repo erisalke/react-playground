@@ -14,5 +14,5 @@ export const SELECT_TILE = 'SELECT_TILE';
 export const RESTART_GAME = 'RESTART_GAME';
 export const UPDATE_PLAYERS_LIST = 'UPDATE_PLAYERS_LIST';
 export const ADD_PLAYER = 'ADD_PLAYER';
-
-export const SWITCH_TURN = 'SWITCH_TURN';
+export const REMOVE_PLAYER = 'REMOVE_PLAYER';
+// export const SWITCH_TURN = 'SWITCH_TURN';
