@@ -31,15 +31,12 @@ const TicTacToe = React.createClass({
 
   markTile: function(position){
 		if (this.props.tictactoe.players[0].id === this.props.user.id){
-			// console.log(this.props.user.id, "GOOD MOVE")
 			store.dispatch(selectTile({pos: position, userId: this.props.user.id}))
 	    emitEvent('action', selectTile({pos: position, userId: this.props.user.id}))
 		}else{
 				console.log("Its not your turn man",
 					this.props.tictactoe.players[0].name, "should make a move!!1")
 		}
-    // console.log("mark tile", position)
-
   },
 
 
@@ -64,7 +61,11 @@ const TicTacToe = React.createClass({
                   key={i}
                   className={classVariant.join(" ")}
                   onClick={ ()=>{this.markTile(i)} }>
-                    {tile}
+                    {
+											(tile === '') ? '' :
+												(tile === this.props.user.id) ? "X" : "O"
+										}
+
                 </div>
               )
             })

@@ -12,16 +12,31 @@ const ticTacToe = (state = initialState(), action) => {
 
 		case types.ADD_PLAYER:
       {
-				console.log(action.user)
-				if (state.players.some(p => p.isHost)) {
-					return _.assign({}, state, { players: [...state.players, action.user] });
-				}
-				return _.assign({}, state, { players: [...state.players, {...action.user, isHost:true}] });
+				const player = state.players.some(p => p.isHost) ?
+													action.user :
+													{ ...action.user, isHost: true }
+
+				return _.assign({},
+					state,
+					{
+						players: [
+							...state.players, player
+						]
+					});
       }
 
 		case types.REMOVE_PLAYER:
       {
-				return _.assign({}, state, { players: [...state.players.filter(p => p.id !== action.user.id)] });
+				let players = [
+					...state.players.filter(
+						player => (player.id !== action.user.id) )
+						]
+
+				if ( state.players.some(player => player.isHost) ) {
+					players[0].isHost = true
+				}
+
+				return _.assign({}, state, { players: players });
       }
 
 		case types.SELECT_TILE:

@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import reducer from '../../app/reducers/tictactoe';
 
 describe('tictactoe reducer', () => {
+
   it('returns initial state', () => {
     const nextState = reducer(undefined, {type: 'any'});
     expect(nextState).to.deep.equal({
@@ -60,7 +61,7 @@ describe('tictactoe reducer', () => {
 								{ id: 2, name: 'joe', }]
 						};
 
-		const action = { type: 'REMOVE_PLAYER', userId: 2 };
+		const action = { type: 'REMOVE_PLAYER', user: { id: 2 } };
 		const nextState = reducer(initialState, action);
 
 		expect(nextState).to.deep.equal({
@@ -70,20 +71,18 @@ describe('tictactoe reducer', () => {
 		});
 	});
 
-	it('removes a host user and adds a new user to player list, results with a host', () => {
+	it('removes a host user from player list, results with remaigning player hosting', () => {
 		const initialState = {
 			players: [{ id: 123, name: 'bob', isHost:true  },
 								{ id: 2, name: 'joe', }]
 						};
 
-		const actionRemove = { type: 'REMOVE_PLAYER', userId: 123 };
-		const actionAdd = { type: 'ADD_PLAYER', user: { id: 321, name: 'Lucy' } };
-		const nextState = reducer(reducer(initialState, actionRemove), actionAdd);
+		const action = { type: 'REMOVE_PLAYER', user: { id: 123 } };
+		const nextState = reducer(initialState, action);
 
 		expect(nextState).to.deep.equal({
 			players: [
-				{ id: 2, name: 'joe', },
-				{ id: 321, name: 'Lucy', isHost:true  },
+				{ id: 2, name: 'joe', isHost:true  },
 			],
 		});
 	});
@@ -149,4 +148,5 @@ describe('tictactoe reducer', () => {
 								],
     });
   });
+
 });
