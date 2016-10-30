@@ -13,3 +13,11 @@ export function createRoomSuccess(room) {
     room,
   };
 }
+
+export function addUserToRoom(userId, roomId) {
+  return {
+    type: types.ADD_USER_TO_ROOM,
+    userId,
+		roomId,
+  };
+}

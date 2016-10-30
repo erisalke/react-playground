@@ -1,20 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import Chat from './chat';
+
 import {emitEvent} from '../../api/websockets';
 import store from '../../store';
-import { flushChatMessages } from  '../../actions/chat-actions';
+import Chat from './chat';
 import TicTacToe from '../game/tictactoe';
+import { addUserToRoom } from '../../actions/room-actions';
+import { flushChatMessages } from  '../../actions/chat-actions';
 
 
 const Room = React.createClass({
   componentDidMount: function() {
-    emitEvent("user enters room", {
-      user: this.props.user,
-      roomId: this.props.params.roomId
-    })
-  },
+		const user = this.props.user
+		const roomId = this.props.params.roomId
+
+		store.dispatch(addUserToRoom(user, roomId))
+    emitEvent('action', addUserToRoom(user, roomId))
+	},
 
   componentWillUnmount: function() {
     store.dispatch(flushChatMessages())
@@ -25,9 +28,10 @@ const Room = React.createClass({
   },
 
   name: function(){
-    console.log("from room:",this)
+    console.log("broken stuff here from room:",this)
 //todo: shall be fixed
-    return this.props.user.name || "something is wrong here..."
+    return "name"
+		// this.props.user.name || "something is wrong here..."
   },
 
   render: function() {
@@ -36,23 +40,20 @@ const Room = React.createClass({
         <h1>{this.name()}</h1>
         <Link to="/rooms">Go back</Link>
         <div>
-          Enjoy the game
+          Enjoy the game { this.props.user ? this.props.user.name : "refresh :("}
         </div>
         <div>
           <Chat />
-          <TicTacToe />
+          <TicTacToe roomId={this.props.params.roomId}/>
         </div>
       </div>
     );
   }
 });
 
-
 const mapStateToProps = function(store) {
-  console.log("state to props mapped")
   return {
-    // rooms: store.rooms,
-    user: store.user
+    user: store.session.user,
   };
 };
 

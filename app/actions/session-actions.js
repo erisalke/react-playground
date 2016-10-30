@@ -7,3 +7,10 @@ export function loadInitialState(state) {
     state,
   };
 }
+
+export function setUserInternal(user) {
+  return {
+    type: types.SET_USER_INTERNAL,
+    user,
+  };
+}

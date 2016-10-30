@@ -10,7 +10,7 @@ const Chat = React.createClass({
       <div>
         <h3>chat</h3>
         <ChatBox>{this.props.chat}</ChatBox>
-        <ChatInput userName={this.props.user.name} />
+				<ChatInput userName={ this.props.user ? this.props.user.name : 'refresh :('} />
       </div>
     );
   }
@@ -19,7 +19,7 @@ const Chat = React.createClass({
 const mapStateToProps = function(store) {
   return {
     chat: store.chat,
-    user: store.user
+    user: store.session.user
   };
 };
 

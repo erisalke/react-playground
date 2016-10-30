@@ -3,8 +3,9 @@ import Button from '../basic/button';
 import store from '../../store';
 import { createRoom } from '../../api/room-api';
 import { emitEvent } from '../../api/websockets';
-import { setUserName } from '../../actions/user-actions';
-
+import { setUser } from '../../actions/user-actions';
+import { setUserInternal } from '../../actions/session-actions';
+import crypto from 'crypto'
 
 const CreateRoomButton = React.createClass({
   render: function() {
@@ -13,12 +14,18 @@ const CreateRoomButton = React.createClass({
         <input ref={text => {
           this.input = text;
         }} />
-        <Button name="Set name" onClick={
+
+        <Button name="Login" onClick={
           () => {
-            var name = this.input.value || 'annonymus'
+            var user = {
+							id: crypto.randomBytes(24).toString('hex'),
+							name: this.input.value || 'annonymus'
+						}
             this.input.value = ''
-            store.dispatch(setUserName(name))
-            emitEvent('set user name', name)
+
+						store.dispatch(setUserInternal(user));
+            store.dispatch(setUser(user));
+						emitEvent('action', setUser(user));
           }
         }/>
       </div>

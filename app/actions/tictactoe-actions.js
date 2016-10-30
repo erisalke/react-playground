@@ -13,9 +13,16 @@ export function restartGame() {
   };
 }
 
-export function updatePlayerList(user) {
+export function addPlayerToGame(user) {
   return {
     type: types.ADD_PLAYER,
+    user,
+  };
+}
+
+export function removePlayerFromGame(user) {
+  return {
+    type: types.REMOVE_PLAYER,
     user,
   };
 }

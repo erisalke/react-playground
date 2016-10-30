@@ -11,8 +11,8 @@ const Rooms = React.createClass({
       <div className="home-page">
         <h1>Game Rooms</h1>
         <div>
-          { this.props.user.name
-            ? `Hello, ${this.props.user.name}`
+				{ (this.props.session && this.props.session.user)
+            ? `Hello, ${this.props.session.user.name}`
             : <GreetingsPanel/> }
         </div>
         <div>
@@ -29,7 +29,7 @@ const Rooms = React.createClass({
 const mapStateToProps = function(store) {
   return {
     rooms: store.rooms,
-    user: store.user
+    session: store.session
   };
 };
 

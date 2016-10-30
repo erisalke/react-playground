@@ -30,7 +30,7 @@ app.get('*', (req, res) => { res.sendFile(webpackConfig.output.path + '/index.ht
 io.on('connection', (socket) => {
 	socket.emit('initial state', store.getState())
 
-	// client actions passing by
+	// all global broadcasting messages, client input bus
 	socket.on('action', (action) => {
 		console.log()
 		console.log("ACTION")
@@ -46,6 +46,12 @@ io.on('connection', (socket) => {
 		console.log("SERVERSIDE STORE STATE:")
 	 	console.log(store.getState())
 	});
+
+	// todo: after disconnect should purge all data about user
+	socket.on('disconnect', () => {
+		// console.log('user disconnected purge all data')
+	})
+
 });
 
 server.listen(8080, function () {

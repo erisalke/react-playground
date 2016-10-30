@@ -1,29 +1,45 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { selectTile, restartGame, userJoinsTheGame }
+import { selectTile, restartGame, addPlayerToGame, removePlayerFromGame }
   from '../../actions/ticTacToe-actions';
 import { emitEvent } from '../../api/websockets';
 import store from '../../store';
 
 const TicTacToe = React.createClass({
   componentDidMount: function(){
-    console.log("monuted")
+		emitEvent('action', addPlayerToGame(this.props.user))
+		store.dispatch(addPlayerToGame(this.props.user))
+		//  { type: 'ADD_PLAYER', user: { id: 123, name: 'joe' } };
+
+    // console.log("monuted")
+		// store.dispatch(updatePlayerList(user))
+		// emitEvent('a player joins the game', {user: this.props.user, roomId: this.props.roomId })
+// console.log("in the OX game, props:", this.props)
     // store.dispatch(userJoinsTheGame(this.props.user))
     // emitEvent('user joins the game', {user: this.props.user)
     // this.unsubscribe = store.subscribe(()=> this.forceUpdate())
   },
 
   componentWillUnmount: function(){
-    console.log("unmonuted")
-    store.dispatch(restartGame())
+		emitEvent('action', removePlayerFromGame(this.props.user))
+		store.dispatch(removePlayerFromGame(this.props.user))
+    // console.log("unmonuted")
+    // store.dispatch(restartGame())
     // this.unsubscribe()
   },
 
 
   markTile: function(position){
-    console.log("mark tile", position)
-    store.dispatch(selectTile({pos: position, userId: this.props.user.id}))
-    emitEvent('tile selected', {pos: position, userId: this.props.user.id})
+		if (this.props.tictactoe.players[0].id === this.props.user.id){
+			// console.log(this.props.user.id, "GOOD MOVE")
+			store.dispatch(selectTile({pos: position, userId: this.props.user.id}))
+	    emitEvent('action', selectTile({pos: position, userId: this.props.user.id}))
+		}else{
+				console.log("Its not your turn man",
+					this.props.tictactoe.players[0].name, "should make a move!!1")
+		}
+    // console.log("mark tile", position)
+
   },
 
 
@@ -61,10 +77,9 @@ const TicTacToe = React.createClass({
 });
 
 const mapStateToProps = function(store) {
-  console.log("THE STORE:", store)
   return {
     tictactoe: store.ticTacToe,
-    user: store.user
+    user: store.session.user
   };
 };
 

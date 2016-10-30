@@ -5,9 +5,11 @@ export const GET_ROOMS_SUCCESS = 'GET_ROOMS_SUCCESS';
 export const UPDATE_CHAT_SUCCESS = 'UPDATE_CHAT_SUCCESS';
 export const FLUSH_CHAT_MESSAGES = 'FLUSH_CHAT_MESSAGES';
 
+// Internal actions
+export const SET_USER_INTERNAL = 'SET_USER_INTERNAL';
+
 // User actions
-export const SET_USER_NAME = 'SET_USER_NAME';
-export const SET_USER_ID = 'SET_USER_ID';
+export const SET_USER = 'SET_USER';
 
 // Tic Tac Toe actions
 export const SELECT_TILE = 'SELECT_TILE';
@@ -17,4 +19,5 @@ export const ADD_PLAYER = 'ADD_PLAYER';
 export const REMOVE_PLAYER = 'REMOVE_PLAYER';
 // export const SWITCH_TURN = 'SWITCH_TURN';
 
-export const INIT_STATE = 'INIT_STATE'
+export const INIT_STATE = 'INIT_STATE';
+export const ADD_USER_TO_ROOM = 'ADD_USER_TO_ROOM';
