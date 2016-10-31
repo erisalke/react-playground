@@ -29,10 +29,12 @@ const ticTacToe = (state = initialState(), action) => {
       {
 				let players = [
 					...state.players.filter(
-						player => (player.id !== action.user.id) )
-						]
+							player => ( player.id !== action.user.id )
+					)
+				]
 
-				if ( state.players.some(player => player.isHost) ) {
+				if ( players.length > 0 &&
+							! players.some(player => player.isHost) ) {
 					players[0].isHost = true
 				}
 

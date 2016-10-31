@@ -11,7 +11,7 @@ const TicTacToe = React.createClass({
 		store.dispatch(addPlayerToGame(this.props.user))
 		//  { type: 'ADD_PLAYER', user: { id: 123, name: 'joe' } };
 
-    // console.log("monuted")
+    console.log("IN TicTacToe ALREDY")
 		// store.dispatch(updatePlayerList(user))
 		// emitEvent('a player joins the game', {user: this.props.user, roomId: this.props.roomId })
 // console.log("in the OX game, props:", this.props)
@@ -20,12 +20,10 @@ const TicTacToe = React.createClass({
     // this.unsubscribe = store.subscribe(()=> this.forceUpdate())
   },
 
-  componentWillUnmount: function(){
+  componentWillUnmount: function() {
 		emitEvent('action', removePlayerFromGame(this.props.user))
 		store.dispatch(removePlayerFromGame(this.props.user))
-    // console.log("unmonuted")
     // store.dispatch(restartGame())
-    // this.unsubscribe()
   },
 
 
@@ -41,8 +39,6 @@ const TicTacToe = React.createClass({
 
 
   render: function() {
-    // const state = store.getState().ticTacToe;
-
     return (
       <div className = 'main-containerX'>
         <div className = 'boardX'>
@@ -58,12 +54,14 @@ const TicTacToe = React.createClass({
 
               return (
                 <div
-                  key={i}
-                  className={classVariant.join(" ")}
-                  onClick={ ()=>{this.markTile(i)} }>
+                  key = { i }
+                  className = { classVariant.join(" ") }
+                  onClick = { ()=>{this.markTile(i)} }>
                     {
 											(tile === '') ? '' :
-												(tile === this.props.user.id) ? "X" : "O"
+												(tile === this.props.user.id) ?
+													this.props.signs.me :
+													this.props.signs.opp
 										}
 
                 </div>
@@ -80,7 +78,8 @@ const TicTacToe = React.createClass({
 const mapStateToProps = function(store) {
   return {
     tictactoe: store.ticTacToe,
-    user: store.session.user
+    user: store.session.user,
+		signs: store.session.signs,
   };
 };
 

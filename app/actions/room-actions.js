@@ -14,10 +14,10 @@ export function createRoomSuccess(room) {
   };
 }
 
-export function addUserToRoom(userId, roomId) {
+export function addUserToRoom(user, roomId) {
   return {
     type: types.ADD_USER_TO_ROOM,
-    userId,
+    user,
 		roomId,
   };
 }

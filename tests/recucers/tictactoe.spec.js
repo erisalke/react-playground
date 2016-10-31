@@ -87,6 +87,19 @@ describe('tictactoe reducer', () => {
 		});
 	});
 
+	it('removes a last user from player list, results with empty list', () => {
+		const initialState = {
+			players: [{ id: 123, name: 'bob', isHost:true  }]
+		};
+
+		const action = { type: 'REMOVE_PLAYER', user: { id: 123 } };
+		const nextState = reducer(initialState, action);
+
+		expect(nextState).to.deep.equal({
+			players: [],
+		});
+	});
+
   it('select tile, marks the tile with userId and rotates the players array', () => {
 		const initialState = {
 			board: ['', '', '', '', '', '', '', '', ''],

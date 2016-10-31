@@ -14,3 +14,10 @@ export function setUserInternal(user) {
     user,
   };
 }
+
+export function setPlayersSigns( signs ) {
+  return {
+    type: types.SET_USER_SIGN,
+    signs
+  };
+}

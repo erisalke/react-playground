@@ -6,6 +6,7 @@ export const UPDATE_CHAT_SUCCESS = 'UPDATE_CHAT_SUCCESS';
 export const FLUSH_CHAT_MESSAGES = 'FLUSH_CHAT_MESSAGES';
 
 // Internal actions
+export const SET_USER_SIGN = 'SET_USER_SIGN';
 export const SET_USER_INTERNAL = 'SET_USER_INTERNAL';
 
 // User actions
