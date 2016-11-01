@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import reducer from '../../app/reducers/tictactoe';
+import reducer from '../../app/reducers/game/tictactoe';
 
 describe('tictactoe reducer', () => {
 

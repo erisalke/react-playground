@@ -24,16 +24,9 @@ const Room = React.createClass({
   componentWillUnmount: function() {
 		const user = this.props.user
 		const roomId = this.props.params.roomId
-		
+
 		store.dispatch(removeUserFromRoom(user, roomId))
     emitEvent('action', removeUserFromRoom(user, roomId))
-		// removeUserFromRoom()
-
-    // store.dispatch(flushChatMessages())
-    // emitEvent("user leaves room", {
-    //   user: this.props.session.user,
-    //   roomId: this.props.params.roomId
-    // })
   },
 
   render: function() {
@@ -45,7 +38,7 @@ const Room = React.createClass({
           Enjoy the game ...
         </div>
         <div>
-          <Chat />
+          <Chat roomId={ this.props.params.roomId }  />
 					<TicTacToeSelector me = { this.props.me }/>
           <TicTacToe roomId={ this.props.params.roomId } />
         </div>
@@ -54,9 +47,8 @@ const Room = React.createClass({
   }
 });
 
-const mapStateToProps = function(store) {
+const mapStateToProps = function(store, ownProps) {
   return {
-		// session:store.session,
     user: store.session.user,
 		me: store.session.signs.me,
   };

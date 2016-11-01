@@ -1,10 +1,11 @@
 import * as types from '../actions/action-types';
 
-export function updateChatSuccess(msg, user) {
+export function updateChatSuccess(user, msg, roomId) {
   return {
     type: types.UPDATE_CHAT_SUCCESS,
-    msg,
     user,
+		msg,
+		roomId
   };
 }
 

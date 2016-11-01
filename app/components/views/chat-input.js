@@ -5,7 +5,8 @@ import { emitEvent } from '../../api/websockets';
 import { updateChatSuccess } from '../../actions/chat-actions';
 import store from '../../store';
 
-export default React.createClass({
+
+const ChatInput = React.createClass({
   render: function(){
     return (
       <div>
@@ -14,12 +15,15 @@ export default React.createClass({
         }} />
         <Button name="Send" onClick={
           () => {
-						console.log("chat is temporarily broken...")
-            // store.dispatch(updateChatSuccess(this.input.value, this.props.userName))
-            // emitEvent('new chat message', {
-            //       user:this.props.userName,
-            //       msg:this.input.value
-                // })
+						const user = this.props.user;
+						const value = this.input.value;
+						const roomId = this.props.roomId;
+
+            store.dispatch(
+							updateChatSuccess(user, value, roomId));
+            emitEvent('action',
+							updateChatSuccess(user, value, roomId));
+
             this.input.value = ''
           }
         }/>
@@ -27,3 +31,5 @@ export default React.createClass({
     )
 }
 })
+
+export default ChatInput;

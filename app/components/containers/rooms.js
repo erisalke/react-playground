@@ -11,9 +11,11 @@ const Rooms = React.createClass({
       <div className="home-page">
         <h1>Game Rooms</h1>
         <div>
-				{ (this.props.session && this.props.session.user)
-            ? `Hello, ${this.props.session.user.name}`
-            : <GreetingsPanel/> }
+					{
+						(this.props.session && this.props.session.user)
+	            ? `Hello, ${this.props.session.user.name}`
+	            : <GreetingsPanel/>
+					}
         </div>
         <div>
           <CreateRoomButton />

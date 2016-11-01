@@ -5,20 +5,25 @@ import ChatBox from '../views/chat-box';
 import ChatInput from '../views/chat-input';
 
 const Chat = React.createClass({
+
   render: function() {
     return (
       <div>
         <h3>chat</h3>
-        <ChatBox>{this.props.chat}</ChatBox>
-				<ChatInput userName={ this.props.user ? this.props.user.name : 'refresh :('} />
+        <ChatBox messages={ this.props.chat }> </ChatBox>
+				<ChatInput
+					roomId = { this.props.roomId }
+					user = { this.props.user || {id:666, name:"dummy"} }
+					/>
       </div>
     );
   }
 });
 
-const mapStateToProps = function(store) {
+const mapStateToProps = function(store, ownProps) {
+	const room = store.rooms.find(room => room.id === ownProps.roomId);
   return {
-    chat: store.chat,
+    chat: room.chat,
     user: store.session.user
   };
 };

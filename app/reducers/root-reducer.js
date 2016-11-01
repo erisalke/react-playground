@@ -8,7 +8,6 @@ import tictactoe from './game/tictactoe';
 
 const allCombined = combineReducers({
     rooms,
-    chat,
     users,
     tictactoe
   })
@@ -16,7 +15,6 @@ const allCombined = combineReducers({
  // hack: add the reducer managing inernal state (session)
 const clientReducer = combineReducers({
 		rooms,
-		chat,
 		users,
 		tictactoe,
     session,
