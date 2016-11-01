@@ -30,6 +30,12 @@ app.get('*', (req, res) => { res.sendFile(webpackConfig.output.path + '/index.ht
 io.on('connection', (socket) => {
 	socket.emit('initial state', store.getState())
 
+	// as a dev tool there's a button to flush down the state
+	socket.on('HARD_RESET', (action) => {
+	  store = createStore(allCombined);
+		socket.emit('initial state', store.getState())
+	})
+
 	// all global broadcasting messages, client input bus
 	socket.on('action', (action) => {
 		console.log()
