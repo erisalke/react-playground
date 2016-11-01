@@ -1,7 +1,21 @@
 import * as types from '../actions/action-types';
+// import tictactoe from './game/tictactoe';
+// import chat from './chat';
 
 const rooms = (state = [], action) => {
   switch (action.type) {
+
+		case types.GET_ROOMS_SUCCESS:
+      return [ ...action.rooms ];
+
+    case types.CREATE_ROOM_SUCCESS:
+      return [
+				...state,
+				{
+					...action.room,
+					users: [],
+				}
+			];
 
 		case types.ADD_USER_TO_ROOM: {
 				return state.map((room) => {
@@ -11,13 +25,6 @@ const rooms = (state = [], action) => {
 					return room;
 				})
 		}
-
-    case types.CREATE_ROOM_SUCCESS: {
-      return [...state, {...action.room, users:[] }];
-    }
-
-    case types.GET_ROOMS_SUCCESS:
-      return [...action.rooms];
 
     default:
       return state;

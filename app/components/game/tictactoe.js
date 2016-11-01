@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { selectTile, restartGame, addPlayerToGame, removePlayerFromGame }
-  from '../../actions/ticTacToe-actions';
+  from '../../actions/tictactoe-actions';
 import { emitEvent } from '../../api/websockets';
 import store from '../../store';
 
@@ -77,7 +77,7 @@ const TicTacToe = React.createClass({
 
 const mapStateToProps = function(store) {
   return {
-    tictactoe: store.ticTacToe,
+    tictactoe: store.tictactoe,
     user: store.session.user,
 		signs: store.session.signs,
   };

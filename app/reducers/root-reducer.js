@@ -3,14 +3,14 @@ import { combineReducers } from 'redux';
 import rooms from './rooms';
 import chat from './chat';
 import users from './users';
-import ticTacToe from './ticTacToe';
 import session from './session';
+import tictactoe from './game/tictactoe';
 
 const allCombined = combineReducers({
     rooms,
     chat,
     users,
-    ticTacToe
+    tictactoe
   })
 
  // hack: add the reducer managing inernal state (session)
@@ -18,7 +18,7 @@ const clientReducer = combineReducers({
 		rooms,
 		chat,
 		users,
-		ticTacToe,
+		tictactoe,
     session,
 	})
 
