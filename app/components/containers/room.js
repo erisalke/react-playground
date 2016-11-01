@@ -8,7 +8,7 @@ import Chat from './chat';
 import TicTacToe from '../game/tictactoe';
 import TicTacToeSelector from '../game/tictactoe-selector';
 
-import { addUserToRoom } from '../../actions/room-actions';
+import { addUserToRoom, removeUserFromRoom } from '../../actions/room-actions';
 import { flushChatMessages } from  '../../actions/chat-actions';
 
 
@@ -16,11 +16,19 @@ const Room = React.createClass({
   componentDidMount: function() {
 		const user = this.props.user
 		const roomId = this.props.params.roomId
+
 		store.dispatch(addUserToRoom(user, roomId))
     emitEvent('action', addUserToRoom(user, roomId))
 	},
 
   componentWillUnmount: function() {
+		const user = this.props.user
+		const roomId = this.props.params.roomId
+		
+		store.dispatch(removeUserFromRoom(user, roomId))
+    emitEvent('action', removeUserFromRoom(user, roomId))
+		// removeUserFromRoom()
+
     // store.dispatch(flushChatMessages())
     // emitEvent("user leaves room", {
     //   user: this.props.session.user,

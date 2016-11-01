@@ -21,3 +21,11 @@ export function addUserToRoom(user, roomId) {
 		roomId,
   };
 }
+
+export function removeUserFromRoom(user, roomId) {
+  return {
+    type: types.REMOVE_USER_FROM_ROOM,
+    user,
+		roomId,
+  };
+}

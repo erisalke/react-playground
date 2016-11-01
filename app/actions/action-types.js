@@ -22,3 +22,4 @@ export const REMOVE_PLAYER = 'REMOVE_PLAYER';
 
 export const INIT_STATE = 'INIT_STATE';
 export const ADD_USER_TO_ROOM = 'ADD_USER_TO_ROOM';
+export const REMOVE_USER_FROM_ROOM = 'REMOVE_USER_FROM_ROOM';

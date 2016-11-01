@@ -18,12 +18,23 @@ const rooms = (state = [], action) => {
 			];
 
 		case types.ADD_USER_TO_ROOM: {
-				return state.map((room) => {
-					if (room.id === action.roomId) {
-						room.users = [ ...room.users, action.user ];
-					}
-					return room;
-				})
+			return state.map((room) => {
+				if (room.id === action.roomId) {
+					room.users = [ ...room.users, action.user ];
+				}
+				return room;
+			})
+		}
+
+		case types.REMOVE_USER_FROM_ROOM: {
+			return state.map((room) => {
+				if (room.id === action.roomId) {
+					room.users = room.users.filter((user) => {
+						return user.id !== action.user.id
+					})
+				}
+				return room;
+			})
 		}
 
     default:
