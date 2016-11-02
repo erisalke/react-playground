@@ -8,7 +8,7 @@ const chat = (state = [
     case types.UPDATE_CHAT_SUCCESS:
 			return [
 				...state,
-				{ user: action.user, msg: action.msg, roomId: action.roomId }
+				{ user: action.user, msg: action.msg }
 			];
 
     case types.FLUSH_CHAT_MESSAGES:

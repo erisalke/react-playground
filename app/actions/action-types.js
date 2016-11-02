@@ -16,10 +16,11 @@ export const SET_USER = 'SET_USER';
 export const SELECT_TILE = 'SELECT_TILE';
 export const RESTART_GAME = 'RESTART_GAME';
 export const UPDATE_PLAYERS_LIST = 'UPDATE_PLAYERS_LIST';
-export const ADD_PLAYER = 'ADD_PLAYER';
-export const REMOVE_PLAYER = 'REMOVE_PLAYER';
+export const ADD_PLAYER_TO_GAME = 'ADD_PLAYER_TO_GAME';
+export const REMOVE_PLAYER_FROM_GAME = 'REMOVE_PLAYER_FROM_GAME';
 // export const SWITCH_TURN = 'SWITCH_TURN';
 
 export const INIT_STATE = 'INIT_STATE';
 export const ADD_USER_TO_ROOM = 'ADD_USER_TO_ROOM';
 export const REMOVE_USER_FROM_ROOM = 'REMOVE_USER_FROM_ROOM';
+export const ROTATE_TURN = 'ROTATE_TURN';

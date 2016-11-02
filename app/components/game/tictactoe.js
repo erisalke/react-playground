@@ -7,33 +7,30 @@ import store from '../../store';
 
 const TicTacToe = React.createClass({
   componentDidMount: function(){
-		emitEvent('action', addPlayerToGame(this.props.user))
-		store.dispatch(addPlayerToGame(this.props.user))
-		//  { type: 'ADD_PLAYER', user: { id: 123, name: 'joe' } };
-
-    console.log("IN TicTacToe ALREDY")
-		// store.dispatch(updatePlayerList(user))
-		// emitEvent('a player joins the game', {user: this.props.user, roomId: this.props.roomId })
-// console.log("in the OX game, props:", this.props)
-    // store.dispatch(userJoinsTheGame(this.props.user))
-    // emitEvent('user joins the game', {user: this.props.user)
-    // this.unsubscribe = store.subscribe(()=> this.forceUpdate())
+		const user = this.props.user;
+		const roomId = this.props.roomId;
+		emitEvent('action', addPlayerToGame(user, roomId))
+		store.dispatch(addPlayerToGame(user, roomId))
   },
 
   componentWillUnmount: function() {
-		emitEvent('action', removePlayerFromGame(this.props.user))
-		store.dispatch(removePlayerFromGame(this.props.user))
-    // store.dispatch(restartGame())
+		const user = this.props.user;
+		const roomId = this.props.roomId;
+		emitEvent('action', removePlayerFromGame(user, roomId))
+		store.dispatch(removePlayerFromGame(user, roomId))
   },
 
 
   markTile: function(position){
-		if (this.props.tictactoe.players[0].id === this.props.user.id){
-			store.dispatch(selectTile({pos: position, userId: this.props.user.id}))
-	    emitEvent('action', selectTile({pos: position, userId: this.props.user.id}))
+		const user = this.props.user;
+		const roomId = this.props.roomId;
+
+		if (this.props.game.players[0].id === this.props.user.id){
+			store.dispatch(selectTile(position, user, roomId))
+	    emitEvent('action', selectTile(position, user, roomId))
 		}else{
 				console.log("Its not your turn man",
-					this.props.tictactoe.players[0].name, "should make a move!!1")
+					this.props.game.players[0].name, "should make a move!!1")
 		}
   },
 
@@ -42,8 +39,9 @@ const TicTacToe = React.createClass({
     return (
       <div className = 'main-containerX'>
         <div className = 'boardX'>
-          {
-            this.props.tictactoe.board.map((tile,i) => {
+					{
+
+            this.props.game.board.map((tile,i) => {
               var classVariant = ["cell"]
               if (i === 1 || i === 4 || i === 7) {
                 classVariant.push("cellY")
@@ -75,9 +73,10 @@ const TicTacToe = React.createClass({
   }
 });
 
-const mapStateToProps = function(store) {
+const mapStateToProps = function(store, ownProps) {
+	const room = store.rooms.find(room => room.id === ownProps.roomId);
   return {
-    tictactoe: store.tictactoe,
+    game: room.game,
     user: store.session.user,
 		signs: store.session.signs,
   };

@@ -1,20 +1,11 @@
 import * as types from '../actions/action-types';
 import chat from './chat';
 import roomUsers from './roomUsers';
-
+import tictactoe from './game/tictactoe';
 
 const rooms = (state = [], action) => {
-	
-  switch (action.type) {
 
-		case types.UPDATE_CHAT_SUCCESS: {
-			return state.map((room) => {
-				if (room.id === action.roomId) {
-					room.chat = chat(room.chat, action);
-				}
-				return room;
-			})
-		}
+  switch (action.type) {
 
 		case types.GET_ROOMS_SUCCESS: {
       return [ ...action.rooms ];
@@ -27,6 +18,7 @@ const rooms = (state = [], action) => {
 					...action.room,
 					users: roomUsers(undefined,action),
 					chat: chat(undefined,action),
+					game: tictactoe(undefined,action),
 				}
 			]
 		}
@@ -48,6 +40,43 @@ const rooms = (state = [], action) => {
 				return room;
 			})
 		}
+
+		case types.UPDATE_CHAT_SUCCESS: {
+			return state.map((room) => {
+				if (room.id === action.roomId) {
+					room.chat = chat(room.chat, action);
+				}
+				return room;
+			})
+		}
+
+		case types.ADD_PLAYER_TO_GAME: {
+			return state.map((room) => {
+				if (room.id === action.roomId) {
+					room.game = tictactoe(room.game, action);
+				}
+				return room;
+			})
+		}
+
+		case types.REMOVE_PLAYER_FROM_GAME: {
+			return state.map((room) => {
+				if (room.id === action.roomId) {
+					room.game = tictactoe(room.game, action);
+				}
+				return room;
+			})
+		}
+
+		case types.SELECT_TILE: {
+			return state.map((room) => {
+				if (room.id === action.roomId) {
+					room.game = tictactoe(room.game, action);
+				}
+				return room;
+			})
+		}
+
 
     default:
       return state;
