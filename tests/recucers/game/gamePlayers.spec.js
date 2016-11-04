@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 
-import reducer from '../../../app/reducers/game/gamePlayers';
+import reducer from '../../../app/reducers/game/players';
 
-describe('gamePlayers reducer >', () => {
+describe('players reducer >', () => {
 
 	it('returns initial state', () => {
 		const initialState = undefined

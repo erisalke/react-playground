@@ -111,7 +111,7 @@ describe('tictactoe reducer >', () => {
 
     expect(nextState).to.deep.equal({
       board: ['', '', 1, '', '', '', '', '', ''],
-			gameWinner: {},
+			winner: {},
 			players: [{ id: 2, name: 'joe', },
 								{ id: 1, name: 'bob', isHost:true  }]
     });
@@ -134,7 +134,7 @@ describe('tictactoe reducer >', () => {
 
 		expect(nextState).to.deep.equal({
 			board: [100,200,100,200,100, '', '', '', ''],
-			gameWinner: {},
+			winner: {},
 			players: [{ id: 200, name: 'joe', },
 								{ id: 100, name: 'bob', isHost:true  }]
 		});
@@ -156,9 +156,9 @@ describe('tictactoe reducer >', () => {
       board: [123, '', '',
               '', 123, '',
               '', '', 123],
-      gameWinner: {
-				winner: 123,
-				winningLine: [0,4,8],
+      winner: {
+				user: { id: 123 },
+				line: [0,4,8],
 			},
 			players: [{ id: 999, name: 'joe', },
 								{ id: 123, name: 'bob', isHost:true  },

@@ -13,13 +13,13 @@ const rooms = (state = [], action) => {
 
 		case types.CREATE_ROOM_SUCCESS: {
 			return [
-				...state,
 				{
 					...action.room,
 					users: roomUsers(undefined,action),
 					chat: chat(undefined,action),
 					game: tictactoe(undefined,action),
-				}
+				},
+				...state
 			]
 		}
 

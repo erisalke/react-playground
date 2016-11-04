@@ -6,6 +6,7 @@ import {
 	addPlayerToGame,
 	removePlayerFromGame,
 } from '../../actions/tictactoe-actions';
+import TicTacToePlayers from './tictactoe-players';
 import { emitEvent } from '../../api/websockets';
 import store from '../../store';
 
@@ -42,17 +43,31 @@ const TicTacToe = React.createClass({
   render: function() {
     return (
       <div className = 'main-containerX'>
+				<TicTacToePlayers user={this.props.user} players = { this.props.game.players } />
         <div className = 'boardX'>
 					{
 
             this.props.game.board.map((tile,i) => {
-              var classVariant = ["cell"]
+							var classVariant = ["cell"]
+
               if (i === 1 || i === 4 || i === 7) {
                 classVariant.push("cellY")
               }
               if (i === 3 || i === 4 || i === 5) {
                 classVariant.push("cellX")
               }
+
+							// winning check
+							if (this.props.game.winner &&
+									this.props.game.winner.hasOwnProperty('user')){
+								if (this.props.game.winner.line.some((lineElement) => lineElement===i)){
+									if (this.props.game.winner.user.id === this.props.user.id){
+											classVariant.push("greenCell")
+									} else {
+										classVariant.push("redCell")
+									}
+								}
+							}
 
               return (
                 <div

@@ -1,13 +1,13 @@
 import _ from 'lodash';
 import * as types from '../../actions/action-types';
-import gameBoard from './gameBoard';
-import gameWinner from './gameWinner';
-import gamePlayers from './gamePlayers';
+import board from './board';
+import winner from './winner';
+import players from './players';
 
 
 const initialState = {
-	board: gameBoard(undefined, { type:'any' }),
-	players: gamePlayers(undefined, { type:'any' }),
+	board: board(undefined, { type:'any' }),
+	players: players(undefined, { type:'any' }),
 }
 
 const tictactoe = (game = initialState, action) => {
@@ -22,7 +22,7 @@ const tictactoe = (game = initialState, action) => {
 					{},
 					game,
 					{
-						players: gamePlayers(game.players, action)
+						players: players(game.players, action)
 					}
 				);
 			}
@@ -32,16 +32,16 @@ const tictactoe = (game = initialState, action) => {
 					{},
 					game,
 					{
-						players: gamePlayers(game.players, action)
+						players: players(game.players, action)
 					}
 				);
 			}
 
 		case types.SELECT_TILE:	{
 				return {
-					board: gameBoard(game.board, action),
-					gameWinner: gameWinner(game.board, action),
-					players: gamePlayers(game.players, { type: types.ROTATE_TURN }),
+					board: board(game.board, action),
+					winner: winner(game.board, action),
+					players: players(game.players, { type: types.ROTATE_TURN }),
 				}
 			}
 

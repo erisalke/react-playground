@@ -1,6 +1,7 @@
 import io from 'socket.io-client';
 import store from '../store';
 import { getRoomsSuccess, createRoomSuccess } from '../actions/room-actions';
+// remove unnecessary imports
 import { updateChatSuccess } from '../actions/chat-actions';
 import { setUserIdSuccess } from '../actions/user-actions';
 import { loadInitialState } from '../actions/session-actions';
@@ -51,7 +52,7 @@ const initSocket = () => {
 
 const emitEvent = (type, payload) =>
 {
-	console.log("Client emits event, type:", type,"payload:", payload);
+	console.log("Client emits event, payload:", payload);
 	socket.emit(type, payload)
 };
 

@@ -27,11 +27,19 @@
 }
 
 .cellX {
-  border-top: 2px solid lightskyblue;
-  border-bottom: 2px solid lightskyblue;
+	  border-top: 4px solid black;
+	  border-bottom: 4px solid black;
 }
 
 .cellY {
-    border-left: 2px solid lightskyblue;
-    border-right: 2px solid lightskyblue;
+    border-left: 4px solid black;
+    border-right: 4px solid black;
+}
+
+.greenCell {
+		background-color: green;
+}
+
+.redCell {
+		background-color: red;
 }

@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 
-import reducer from '../../../app/reducers/game/gameBoard';
+import reducer from '../../../app/reducers/game/board';
 
-describe('gameBoard reducer >', () => {
+describe('board reducer >', () => {
 
 	it('returns initial state', () => {
 		const initialState = undefined
