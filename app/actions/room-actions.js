@@ -1,4 +1,6 @@
 import * as types from '../actions/action-types';
+import crypto from 'crypto';
+import { emitEvent } from '../api/websockets';
 
 export function getRoomsSuccess(rooms) {
   return {
@@ -11,6 +13,17 @@ export function createRoomSuccess(room) {
   return {
     type: types.CREATE_ROOM_SUCCESS,
     room,
+  };
+}
+
+export function createNewRoom(roomName) {
+  return dispatch => {
+			var room = {
+				id: crypto.randomBytes(24).toString('hex'),
+				name: roomName
+			}
+			dispatch( createRoomSuccess(room) )
+			emitEvent('action', createRoomSuccess(room))
   };
 }
 

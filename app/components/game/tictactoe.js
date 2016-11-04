@@ -1,7 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { selectTile, restartGame, addPlayerToGame, removePlayerFromGame }
-  from '../../actions/tictactoe-actions';
+import {
+	selectTile,
+	restartGame,
+	addPlayerToGame,
+	removePlayerFromGame,
+} from '../../actions/tictactoe-actions';
 import { emitEvent } from '../../api/websockets';
 import store from '../../store';
 
@@ -69,6 +73,7 @@ const TicTacToe = React.createClass({
 
         </div>
       </div>
+
     );
   }
 });

@@ -25,8 +25,8 @@ export function removePlayerFromGame(user, roomId) {
   };
 }
 
-export function restartGame() {
+export function restartGameRequest(user, roomId) {
   return {
-    type: types.RESTART_GAME,
+    type: types.RESTART_GAME_REQUEST,
   };
 }

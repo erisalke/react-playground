@@ -28,6 +28,7 @@ app.use('/static', express.static('dist'))
 app.get('*', (req, res) => { res.sendFile(webpackConfig.output.path + '/index.html'); })
 
 io.on('connection', (socket) => {
+
 	socket.emit('initial state', store.getState())
 
 	// as a dev tool there's a button to flush down the state

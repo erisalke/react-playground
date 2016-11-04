@@ -4,6 +4,7 @@ import CreateRoomButton from '../views/create-room-button';
 import RoomList from '../views/room-list';
 import store from '../../store';
 import GreetingsPanel from '../views/greetings-panel';
+import { createNewRoom } from '../../actions/room-actions';
 
 const Rooms = React.createClass({
   render: function() {
@@ -18,7 +19,9 @@ const Rooms = React.createClass({
 					}
         </div>
         <div>
-          <CreateRoomButton />
+          <CreateRoomButton
+						createRoom= { this.props.createRoom }
+						/>
         </div>
         <div>
           <RoomList rooms={ this.props.rooms } />
@@ -35,4 +38,12 @@ const mapStateToProps = function(store) {
   };
 };
 
-export default connect(mapStateToProps)(Rooms);
+function mapDispatchToProps(dispatch) {
+  return { createRoom :
+		function (name) {
+			dispatch(createNewRoom(name))
+		}
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Rooms);

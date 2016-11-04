@@ -17,7 +17,7 @@ export default function(props) {
               <Link
                 to={ "/room/"+room.id }
                 className="details">
-                  {room.name}
+                  { room.name || room.id }
               </Link>
               <br/>
               <span> {room.id} </span>

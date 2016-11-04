@@ -14,7 +14,7 @@ export const SET_USER = 'SET_USER';
 
 // Tic Tac Toe actions
 export const SELECT_TILE = 'SELECT_TILE';
-export const RESTART_GAME = 'RESTART_GAME';
+export const RESTART_GAME_REQUEST = 'RESTART_GAME_REQUEST';
 export const UPDATE_PLAYERS_LIST = 'UPDATE_PLAYERS_LIST';
 export const ADD_PLAYER_TO_GAME = 'ADD_PLAYER_TO_GAME';
 export const REMOVE_PLAYER_FROM_GAME = 'REMOVE_PLAYER_FROM_GAME';

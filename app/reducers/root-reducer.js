@@ -18,7 +18,6 @@ const clientReducer = combineReducers({
     session,
 	})
 
-
 const clientRoot = (state = {}, action) => {
  	switch (action.type) {
  		case types.INIT_STATE:

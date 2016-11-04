@@ -13,18 +13,16 @@ const CreateRoomButton = React.createClass({
         <input ref={text => {
           this.input = text;
         }} />
-        <Button name="Create room" onClick={
-          () => {
-            var room = {
-							id: crypto.randomBytes(24).toString('hex'),
-              name: this.input.value || 'default name'
-            }
-            this.input.value = ''
-
-						store.dispatch(createRoomSuccess(room))
-						emitEvent('action', createRoomSuccess(room))
-          }
-        }/>
+        <Button
+					name="Create room"
+					onClick={
+	          () =>
+							{
+								this.props.createRoom(this.input.value)
+								this.input.value = ''
+	          	}
+        	}
+				/>
       </div>
     );
   }
