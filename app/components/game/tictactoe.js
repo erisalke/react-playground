@@ -30,12 +30,12 @@ const TicTacToe = React.createClass({
 		const user = this.props.user;
 		const roomId = this.props.roomId;
 
-		if (this.props.game.players[0].id === this.props.user.id){
+
+		if (this.props.game.players[0].id === this.props.user.id
+			&& ! this.props.game.board[position]
+			&& ! (this.props.game.winner && this.props.game.winner.hasOwnProperty('user'))) {
 			store.dispatch(selectTile(position, user, roomId))
 	    emitEvent('action', selectTile(position, user, roomId))
-		}else{
-				console.log("Its not your turn man",
-					this.props.game.players[0].name, "should make a move!!1")
 		}
   },
 
@@ -73,7 +73,7 @@ const TicTacToe = React.createClass({
                 <div
                   key = { i }
                   className = { classVariant.join(" ") }
-                  onClick = { ()=>{this.markTile(i)} }>
+                  onClick = { ()=>{ this.markTile(i)} }>
                     {
 											(tile === '') ? '' :
 												(tile === this.props.user.id) ?

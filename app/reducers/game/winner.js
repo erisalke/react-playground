@@ -28,8 +28,8 @@ const gameWinner = (board =[], action) => {
 
 				if (winningLine) {
 					return {
-						winner: action.user.id,
-						winningLine
+						user: action.user,
+						line: winningLine,
 					}
 				}
 		 }
