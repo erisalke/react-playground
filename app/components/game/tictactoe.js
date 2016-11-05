@@ -6,7 +6,7 @@ import {
 	addPlayerToGame,
 	removePlayerFromGame,
 } from '../../actions/tictactoe-actions';
-
+import TicTacToeScore from './tictactoe-score';
 import TicTacToeNextMove from './tictactoe-nextMove';
 import { emitEvent } from '../../api/websockets';
 import store from '../../store';
@@ -32,6 +32,7 @@ const TicTacToe = React.createClass({
 		const roomId = this.props.roomId;
 
 		if (this.props.game.players[0].id === this.props.user.id
+			&& this.props.game.players.length === 2
 			&& ! this.props.game.board[position]
 			&& ! (this.props.game.winner && this.props.game.winner.hasOwnProperty('user'))) {
 			store.dispatch(selectTile(position, user, roomId))
@@ -47,7 +48,9 @@ const TicTacToe = React.createClass({
 					winner= { this.props.game.winner }
 					players= { this.props.game.players }
 					restartGame= { this.props.restartGame } />
-
+				<TicTacToeScore
+					players= { this.props.game.players }
+					user= { this.props.user } />
 
         <div className = 'boardX'>
 					{

@@ -13,17 +13,18 @@ const gamePlayers = (players = [], action) => {
 				const player = players.some(p => p.isHost)
 												? { ...action.user, score: 0}
 												: { ...action.user, score: 0, isHost: true }
-
+													
 				return [ ...players, player ]
 	    }
 
 		case types.REMOVE_PLAYER_FROM_GAME: {
-				let newPlayers = players.filter(
-													player => player.id !== action.user.id
-												)
+				let newPlayers = players.filter(player => {
+					player.score = 0
+					return player.id !== action.user.id
+				});
 
-				if ( newPlayers.length > 0 &&
-							! newPlayers.some(player => player.isHost) ) {
+				if ( newPlayers.length > 0
+					&& ! newPlayers.some(player => player.isHost) ) {
 					newPlayers[0].isHost = true
 				}
 
