@@ -32,10 +32,10 @@ const Room = React.createClass({
   render: function() {
     return (
       <div className="home-page">
-        <h1>ROom name</h1>
+        <h1>You are in: {this.props.room.name}</h1>
         <Link to="/rooms">Go back</Link>
         <div>
-          Enjoy the game ...
+          Enjoy the game {this.props.user.name}
         </div>
         <div>
           <Chat roomId={ this.props.params.roomId }  />
@@ -48,7 +48,9 @@ const Room = React.createClass({
 });
 
 const mapStateToProps = function(store, ownProps) {
+	const room = store.rooms.find(room => room.id === ownProps.params.roomId)
   return {
+		room: room,
     user: store.session.user,
 		me: store.session.signs.me,
   };
