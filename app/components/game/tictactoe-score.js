@@ -8,18 +8,16 @@ const tictactoeScore = function (props) {
 		<div>
 			<div>Scores:
 				{
-					sortedPlayers.map(player =>{
+					sortedPlayers.map((player, i) =>{
 						if (player.id === props.user.id) {
 							return(
-								<div>
-									<b>
-										{player.name}: {player.score}
-									</b>
+								<div key={i}>
+									<b>{player.name}: {player.score}</b>
 								</div>
 							)
 						}
 						return(
-							<div>
+							<div key={i}>
 								{player.name}: {player.score}
 							</div>
 						)

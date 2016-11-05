@@ -1,6 +1,11 @@
 import * as types from '../../actions/action-types';
 import score from './score';
 
+const newPlayer = function(players, action) {
+	return players.some(player => player.isHost)
+					? { ...action.user, score: 0}
+					: { ...action.user, score: 0, isHost: true }
+}
 
 const gamePlayers = (players = [], action) => {
   switch (action && action.type) {
@@ -10,11 +15,7 @@ const gamePlayers = (players = [], action) => {
 					return players
 				}
 
-				const player = players.some(p => p.isHost)
-												? { ...action.user, score: 0}
-												: { ...action.user, score: 0, isHost: true }
-													
-				return [ ...players, player ]
+				return [ ...players, newPlayer(players, action)]
 	    }
 
 		case types.REMOVE_PLAYER_FROM_GAME: {

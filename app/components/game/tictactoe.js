@@ -13,17 +13,23 @@ import store from '../../store';
 
 const TicTacToe = React.createClass({
   componentDidMount: function(){
-		const user = this.props.user;
 		const roomId = this.props.roomId;
+		const user = this.props.user;
+
 		emitEvent('action', addPlayerToGame(user, roomId))
 		store.dispatch(addPlayerToGame(user, roomId))
   },
 
   componentWillUnmount: function() {
-		const user = this.props.user;
 		const roomId = this.props.roomId;
-		emitEvent('action', removePlayerFromGame(user, roomId))
-		store.dispatch(removePlayerFromGame(user, roomId))
+		const player = this.props.game.players.find(
+			player => player.id === this.props.user.id
+		);
+
+		if (player) {
+			emitEvent('action', removePlayerFromGame(player, roomId))
+			store.dispatch(removePlayerFromGame(player, roomId))
+		}
   },
 
 
@@ -32,9 +38,10 @@ const TicTacToe = React.createClass({
 		const roomId = this.props.roomId;
 
 		if (this.props.game.players[0].id === this.props.user.id
-			&& this.props.game.players.length === 2
-			&& ! this.props.game.board[position]
-			&& ! (this.props.game.winner && this.props.game.winner.hasOwnProperty('user'))) {
+				&& this.props.game.players.length === 2
+				&& ! this.props.game.board[position]
+				&& ! (this.props.game.winner
+					&& this.props.game.winner.hasOwnProperty('user'))) {
 			store.dispatch(selectTile(position, user, roomId))
 	    emitEvent('action', selectTile(position, user, roomId))
 		}
