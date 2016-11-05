@@ -6,7 +6,8 @@ import {
 	addPlayerToGame,
 	removePlayerFromGame,
 } from '../../actions/tictactoe-actions';
-import TicTacToePlayers from './tictactoe-players';
+
+import TicTacToeNextMove from './tictactoe-nextMove';
 import { emitEvent } from '../../api/websockets';
 import store from '../../store';
 
@@ -42,10 +43,11 @@ const TicTacToe = React.createClass({
   render: function() {
     return (
       <div className = 'main-containerX'>
-				<TicTacToePlayers
+				<TicTacToeNextMove
 					winner= { this.props.game.winner }
 					players= { this.props.game.players }
 					restartGame= { this.props.restartGame } />
+
 
         <div className = 'boardX'>
 					{
