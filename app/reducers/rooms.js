@@ -77,6 +77,14 @@ const rooms = (state = [], action) => {
 			})
 		}
 
+		case types.RESTART_GAME_SUCCESS: {
+			return state.map((room) => {
+				if (room.id === action.roomId) {
+					room.game = tictactoe(room.game, action);
+				}
+				return room;
+			})
+		}
 
     default:
       return state;

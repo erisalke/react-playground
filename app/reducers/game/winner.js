@@ -17,10 +17,9 @@ const allPositions = (board, position, userId) => {
 }
 
 const gameWinner = (board =[], action) => {
-	const all = allPositions(board, action.position, action.user.id);
-
 	switch (action.type) {
 		case types.SELECT_TILE: {
+				const all = allPositions(board, action.position, action.user.id);
 				// go through all winningRows searching for first which matches allPositions
 				const winningLine = winningRows.find(
 					row => row.every(elem => all.indexOf(elem) > -1)

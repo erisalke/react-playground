@@ -30,7 +30,6 @@ const TicTacToe = React.createClass({
 		const user = this.props.user;
 		const roomId = this.props.roomId;
 
-
 		if (this.props.game.players[0].id === this.props.user.id
 			&& ! this.props.game.board[position]
 			&& ! (this.props.game.winner && this.props.game.winner.hasOwnProperty('user'))) {
@@ -43,7 +42,11 @@ const TicTacToe = React.createClass({
   render: function() {
     return (
       <div className = 'main-containerX'>
-				<TicTacToePlayers user={this.props.user} players = { this.props.game.players } />
+				<TicTacToePlayers
+					winner= { this.props.game.winner }
+					players= { this.props.game.players }
+					restartGame= { this.props.restartGame } />
+
         <div className = 'boardX'>
 					{
 
@@ -99,7 +102,16 @@ const mapStateToProps = function(store, ownProps) {
     game: room.game,
     user: store.session.user,
 		signs: store.session.signs,
+		roomId: room.id,
   };
 };
 
-export default connect(mapStateToProps)(TicTacToe);
+function mapDispatchToProps(dispatch, ownProps) {
+  return { restartGame :
+		function () {
+			dispatch(restartGame( ownProps.roomId ))
+		}
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TicTacToe);

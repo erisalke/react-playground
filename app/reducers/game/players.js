@@ -1,4 +1,5 @@
 import * as types from '../../actions/action-types';
+import score from './score';
 
 
 const gamePlayers = (players = [], action) => {
@@ -10,8 +11,8 @@ const gamePlayers = (players = [], action) => {
 				}
 
 				const player = players.some(p => p.isHost)
-												? action.user
-												: { ...action.user, isHost: true }
+												? { ...action.user, score: 0}
+												: { ...action.user, score: 0, isHost: true }
 
 				return [ ...players, player ]
 	    }
@@ -31,6 +32,15 @@ const gamePlayers = (players = [], action) => {
 
 		case types.ROTATE_TURN: {
 				return [...players.slice(1), players[0] ]
+			}
+
+		case types.ADD_POINT: {
+				return players.map(player => {
+					if (player.id === action.user.id) {
+						player.score = score(player.score, action)
+					}
+					return player
+				});
 			}
 
     default:

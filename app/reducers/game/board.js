@@ -6,7 +6,7 @@ const initialState = () => (
 	['', '', '', '', '', '', '', '', '']
 )
 
-const gameBoard = (board = initialState(), action) => {
+const board = (board = initialState(), action) => {
 	switch (action.type) {
 
 		case types.SELECT_TILE: {
@@ -22,4 +22,4 @@ const gameBoard = (board = initialState(), action) => {
 	}
 };
 
-export default gameBoard;
+export default board;

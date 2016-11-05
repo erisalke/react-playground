@@ -3,13 +3,23 @@ import { Link } from 'react-router';
 import { setPlayersSigns } from '../../actions/session-actions';
 import store from '../../store';
 
-const name = function(props) {
-	const name = (props.players && props.players[0])
-									? props.players[0].name
-									: 'nic'
+const nextMove = function(players) {
+	const name = (players && players[0])
+									? players[0].name
+									: ''
 
 	return "Next move: " + name
-}
+};
+
+const restartButton = function(restartGame) {
+	return(
+		<button onClick={ () => {
+			restartGame()
+		}} >
+			restart game
+		</button>
+	)
+};
 
 export default function (props) {
 	const defClass = "btn btn-default"
@@ -18,7 +28,9 @@ export default function (props) {
 		<div>
 			<div>
 				{
-					name(props)
+					(props.winner && props.winner.user)
+						? restartButton(props.restartGame)
+						: nextMove(props.players)
 				}
 			</div>
 

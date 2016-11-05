@@ -38,12 +38,24 @@ const tictactoe = (game = initialState, action) => {
 			}
 
 		case types.SELECT_TILE:	{
+				const newWinner = winner(game.board, action);
+				const playerAction = newWinner.user
+															? { type: types.ADD_POINT, user: newWinner.user }
+															: { type: types.ROTATE_TURN };
 				return {
 					board: board(game.board, action),
-					winner: winner(game.board, action),
-					players: players(game.players, { type: types.ROTATE_TURN }),
+					players: players(game.players, playerAction),
+					winner: newWinner,
 				}
 			}
+
+		case types.RESTART_GAME_SUCCESS: {
+			return {
+				board: board(undefined, action),
+				players: players(game.players, { type: types.ROTATE_TURN }),
+				winner: winner(undefined, action),
+			}
+		}
 
     default:
       return game;

@@ -1,4 +1,6 @@
 import * as types from '../actions/action-types';
+import { emitEvent } from '../api/websockets';
+
 
 export function selectTile(position, user, roomId) {
   return {
@@ -25,8 +27,16 @@ export function removePlayerFromGame(user, roomId) {
   };
 }
 
-export function restartGameRequest(user, roomId) {
-  return {
-    type: types.RESTART_GAME_REQUEST,
+export function restartGameSuccess(roomId) {
+	return {
+    type: types.RESTART_GAME_SUCCESS,
+		roomId,
+  };
+}
+
+export function restartGame(roomId) {
+  return dispatch => {
+			dispatch( restartGameSuccess(roomId) )
+			emitEvent('action', restartGameSuccess(roomId))
   };
 }
