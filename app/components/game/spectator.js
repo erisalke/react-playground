@@ -7,37 +7,20 @@ import {
 	removePlayerFromGame,
 } from '../../actions/tictactoe-actions';
 import TicTacToeScore from './tictactoe-score';
-import TicTacToeSelector from './tictactoe-selector';
 import TicTacToeNextMove from './tictactoe-nextMove';
 import { emitEvent } from '../../api/websockets';
 import store from '../../store';
+import _ from 'lodash';
 
-const TicTacToe = React.createClass({
 
-  markTile: function(position){
-		const user = this.props.user;
-		const roomId = this.props.roomId;
-
-		if (this.props.game.players[0].id === this.props.user.id
-				&& this.props.game.players.length === 2
-				&& ! this.props.game.board[position]
-				&& ! (this.props.game.winner
-					&& this.props.game.winner.hasOwnProperty('user'))) {
-			store.dispatch(selectTile(position, user, roomId))
-	    emitEvent('action', selectTile(position, user, roomId))
-		}
-  },
+const Spectator = React.createClass({
+ 	sortedPlayers: function() {
+		return _.sortBy(this.props.game.players, [function(o) { return o.name; }])
+	},
 
   render: function() {
     return (
       <div className = 'main-containerX'>
-
-				<TicTacToeSelector me={ this.props.signs.me } />
-
-				<TicTacToeNextMove
-					winner= { this.props.game.winner }
-					players= { this.props.game.players }
-					restartGame= { this.props.restartGame } />
 
 				<TicTacToeScore
 					players= { this.props.game.players }
@@ -60,25 +43,20 @@ const TicTacToe = React.createClass({
 							if (this.props.game.winner &&
 									this.props.game.winner.hasOwnProperty('user')){
 								if (this.props.game.winner.line.some((lineElement) => lineElement===i)){
-									if (this.props.game.winner.user.id === this.props.user.id){
-											classVariant.push("greenCell")
-									} else {
-										classVariant.push("redCell")
-									}
+									classVariant.push("greenCell")
 								}
 							}
 
               return (
                 <div
                   key = { i }
-                  className = { classVariant.join(" ") }
-                  onClick = { ()=>{ this.markTile(i) } }>
+                  className = { classVariant.join(" ") } >
                     {
 											(tile === '')
 												? ''
-												: (tile === this.props.user.id)
-														? this.props.signs.me
-														: this.props.signs.opp
+												: (tile === this.sortedPlayers()[0].id)
+														? "O"
+														: "X"
 										}
                 </div>
               )
@@ -94,20 +72,11 @@ const TicTacToe = React.createClass({
 
 const mapStateToProps = function(store, ownProps) {
 	const room = store.rooms.find(room => room.id === ownProps.roomId);
+
   return {
     game: room.game,
     user: store.session.user,
-		signs: store.session.signs,
-		roomId: room.id,
   };
 };
 
-function mapDispatchToProps(dispatch, ownProps) {
-  return { restartGame :
-		function () {
-			dispatch(restartGame( ownProps.roomId ))
-		}
-	}
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(TicTacToe);
+export default connect(mapStateToProps)(Spectator);

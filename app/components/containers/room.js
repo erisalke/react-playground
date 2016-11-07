@@ -5,8 +5,7 @@ import { Link } from 'react-router';
 import {emitEvent} from '../../api/websockets';
 import store from '../../store';
 import Chat from './chat';
-import TicTacToe from '../game/tictactoe';
-import TicTacToeSelector from '../game/tictactoe-selector';
+import TicTacToeRoot from '../game/tictactoe-root';
 
 import { addUserToRoom, removeUserFromRoom } from '../../actions/room-actions';
 import { flushChatMessages } from  '../../actions/chat-actions';
@@ -32,15 +31,15 @@ const Room = React.createClass({
   render: function() {
     return (
       <div className="home-page">
-        <h1>You are in: {this.props.room.name}</h1>
+        <h1>You are in: { this.props.room.name }</h1>
         <Link to="/rooms">Go back</Link>
         <div>
-          Enjoy the game {this.props.user.name}
+          Enjoy the game { this.props.user.name }
         </div>
         <div>
           <Chat roomId={ this.props.params.roomId }  />
-					<TicTacToeSelector me = { this.props.me }/>
-          <TicTacToe roomId={ this.props.params.roomId } />
+					<TicTacToeRoot roomId={ this.props.params.roomId } />
+
         </div>
       </div>
     );
