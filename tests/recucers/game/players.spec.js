@@ -37,9 +37,14 @@ describe('players reducer >', () => {
 		};
 		const nextState = reducer(initialState, action);
 
-		expect(nextState).to.deep.equal(
-			[ { id: 2, name: 'joe', isHost: true } ]
-		);
+		expect(nextState).to.deep.equal([
+				{
+					id: 2,
+					name: 'joe',
+					isHost: true,
+					score: 0,
+			}
+		]);
 	});
 
 	it('add player to host player, returns both', () => {
@@ -55,7 +60,7 @@ describe('players reducer >', () => {
 
 		expect(nextState).to.deep.equal([
 				{ id: 1, name: 'bob', isHost: true },
-				{ id: 2, name: 'joe' },
+				{ id: 2, name: 'joe', score: 0, },
 			]
 		);
 	});
@@ -71,7 +76,7 @@ describe('players reducer >', () => {
 
 		expect(nextState).to.deep.equal([
 				{ id: 1, name: 'bob' },
-				{ id: 2, name: 'joe', isHost:true },
+				{ id: 2, name: 'joe', isHost:true, score: 0, },
 			]);
 	});
 
@@ -85,7 +90,7 @@ describe('players reducer >', () => {
 		const nextState = reducer(initialState, action);
 
 		expect(nextState).to.deep.equal([
-				{ id: 123, name: 'bob', isHost:true  },
+				{ id: 123, name: 'bob', isHost:true, score: 0, },
 			]
 		);
 	});
@@ -100,7 +105,7 @@ describe('players reducer >', () => {
 		const nextState = reducer(initialState, action);
 
 		expect(nextState).to.deep.equal([
-				{ id: 2, name: 'joe', isHost:true  },
+				{ id: 2, name: 'joe', isHost:true, score: 0, },
 			]
 		);
 	});

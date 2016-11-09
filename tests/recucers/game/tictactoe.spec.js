@@ -21,8 +21,13 @@ describe('tictactoe reducer >', () => {
 
     expect(nextState).to.deep.equal({
       players: [
-        { id: 123, name: 'joe', isHost: true },
-      ],
+				{
+					id: 123,
+					name: 'joe',
+					isHost: true,
+					score: 0,
+				}
+			],
     });
   });
 
@@ -34,8 +39,8 @@ describe('tictactoe reducer >', () => {
 
 		expect(nextState).to.deep.equal({
 			players: [
-				{ id: 1, name: 'bob', isHost:true  },
-				{ id: 2, name: 'joe'},
+				{ id: 1, name: 'bob', isHost:true },
+				{ id: 2, name: 'joe', score: 0 },
 			],
 		});
 	});
@@ -49,7 +54,7 @@ describe('tictactoe reducer >', () => {
     expect(nextState).to.deep.equal({
       players: [
         { id: 1, name: 'bob' },
-        { id: 2, name: 'joe', isHost:true },
+        { id: 2, name: 'joe', isHost:true, score: 0, },
       ],
     });
   });
@@ -65,7 +70,7 @@ describe('tictactoe reducer >', () => {
 
 		expect(nextState).to.deep.equal({
 			players: [
-				{ id: 123, name: 'bob', isHost:true  },
+				{ id: 123, name: 'bob', isHost:true, score: 0, },
 			],
 		});
 	});
@@ -81,7 +86,7 @@ describe('tictactoe reducer >', () => {
 
 		expect(nextState).to.deep.equal({
 			players: [
-				{ id: 2, name: 'joe', isHost:true  },
+				{ id: 2, name: 'joe', isHost:true, score: 0, },
 			],
 		});
 	});
@@ -160,9 +165,10 @@ describe('tictactoe reducer >', () => {
 				user: { id: 123 },
 				line: [0,4,8],
 			},
-			players: [{ id: 999, name: 'joe', },
-								{ id: 123, name: 'bob', isHost:true  },
-								],
+			players: [
+				{ id: 123, name: 'bob', isHost:true, score: 1, },
+				{ id: 999, name: 'joe', },
+			],
     });
   });
 

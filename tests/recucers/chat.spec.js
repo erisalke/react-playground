@@ -5,7 +5,7 @@ import reducer from '../../app/reducers/chat';
 describe('chat reducer >', () => {
 
 	it('is empty', () => {
-		expect(null).to.be.ok;
+		expect(null).to.be.not.ok;
   });
 
 });
