@@ -8,6 +8,7 @@ const Home = React.createClass({
         <p>
           My name is...
           This is just a pet project to play around with React.
+          And now comes with crunchy continous deployment to AWS! :)
         </p>
       </div>
     );
