@@ -7,7 +7,7 @@ import { setUserIdSuccess } from '../actions/user-actions';
 import { loadInitialState } from '../actions/session-actions';
 import { selectTile, updatePlayerList } from '../actions/tictactoe-actions';
 
-const socket = io.connect('http://localhost:8080', {reconnect: true});
+const socket = io.connect('', { reconnect: true });
 
 const initSocket = () => {
   // ask for initial state (all available rooms)
