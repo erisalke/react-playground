@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import store from '../../store';
 import ChatBox from '../views/chat-box';
 import ChatInput from '../views/chat-input';
 import { sendMessage } from '../../actions/chat-actions';
@@ -14,7 +13,7 @@ const Chat = React.createClass({
         <ChatBox messages={ this.props.chat } />
 				<ChatInput
 					sendMessage= { (msg) =>
-						this.props.sendMessage(msg)
+						this.props.sendMessage(this.props.user, msg, this.props.roomId)
 					}
 					/>
       </div>
@@ -25,8 +24,8 @@ const Chat = React.createClass({
 const mapDispatchToProps = function(dispatch) {
 	return {
 		sendMessage :
-			function (msg) {
-				dispatch(sendMessage(this.props.user, msg, this.props.roomId));
+			function (user, msg, roomId) {
+				dispatch(sendMessage(user, msg, roomId));
 			}
 	}
 };

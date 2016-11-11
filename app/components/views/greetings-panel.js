@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import InputWithButton from '../basic/InputWithButton';
+import InputWithButton from '../basic/inputWithButton';
 import { handleLogin } from '../../actions/user-actions';
 
 

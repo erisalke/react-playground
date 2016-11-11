@@ -1,4 +1,5 @@
 import * as types from '../actions/action-types';
+import { emitEvent } from '../api/websockets';
 
 export function updateChatSuccess(user, msg, roomId) {
   return {

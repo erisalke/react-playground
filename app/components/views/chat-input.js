@@ -4,8 +4,8 @@ import InputWithButton from '../basic/inputWithButton';
 export default function(props) {
 	return (
 		<InputWithButton
-			name= "Send"
-			onClick= { props.handleSendMsg }
+			buttonName= "Send"
+			onClick={ props.sendMessage }
 			/>
-		);
+	);
 };
