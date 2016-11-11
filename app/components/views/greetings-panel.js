@@ -1,36 +1,38 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Button from '../basic/button';
 import store from '../../store';
 import { createRoom } from '../../api/room-api';
 import { emitEvent } from '../../api/websockets';
 import { setUser } from '../../actions/user-actions';
 import { setUserInternal } from '../../actions/session-actions';
-import crypto from 'crypto'
+import crypto from 'crypto';
+import InputWithButton from '../basic/InputWithButton';
+import { handleLogin } from '../../actions/user-actions';
 
-const CreateRoomButton = React.createClass({
+
+
+const GreetingsPanel = React.createClass({
   render: function() {
     return (
       <div>
-        <input ref={text => {
-          this.input = text;
-        }} />
+        <InputWithButton
+					buttonName="Login"
+					onClick={ this.props.handleLogin }
+					/>
 
-        <Button name="Login" onClick={
-          () => {
-            var user = {
-							id: crypto.randomBytes(24).toString('hex'),
-							name: this.input.value || 'annonymus'
-						}
-            this.input.value = ''
-
-						store.dispatch(setUserInternal(user));
-            store.dispatch(setUser(user));
-						emitEvent('action', setUser(user));
-          }
-        }/>
       </div>
     );
   }
 });
 
-export default CreateRoomButton;
+function mapDispatchToProps(dispatch) {
+  return {
+		handleLogin :
+			function (value) {
+				dispatch(handleLogin( value ))
+			}
+	}
+}
+
+export default connect(undefined, mapDispatchToProps)(GreetingsPanel);

@@ -1,6 +1,7 @@
 import React from 'react';
 import TicTacToe from './game/tictactoe';
 import {emitEvent} from '../api/websockets'
+
 const Home = React.createClass({
   render: function() {
     return (

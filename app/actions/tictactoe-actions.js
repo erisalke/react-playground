@@ -36,7 +36,7 @@ export function restartGameSuccess(roomId) {
 
 export function restartGame(roomId) {
   return dispatch => {
-			dispatch( restartGameSuccess(roomId) )
-			emitEvent('action', restartGameSuccess(roomId))
+		dispatch( restartGameSuccess(roomId) )
+		emitEvent('action', restartGameSuccess(roomId))
   };
 }
