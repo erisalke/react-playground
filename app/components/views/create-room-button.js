@@ -1,31 +1,11 @@
 import React from 'react';
-import Button from '../basic/button'
-import store from '../../store';
-import { createRoom } from '../../api/room-api'
-import { emitEvent } from '../../api/websockets';
-import { createRoomSuccess } from '../../actions/room-actions'
-import crypto from 'crypto';
+import InputWithButton from '../basic/InputWithButton';
 
-const CreateRoomButton = React.createClass({
-  render: function() {
-    return (
-      <div>
-        <input ref={text => {
-          this.input = text;
-        }} />
-        <Button
-					name="Create room"
-					onClick={
-	          () =>
-							{
-								this.props.createRoom(this.input.value)
-								this.input.value = ''
-	          	}
-        	}
-				/>
-      </div>
-    );
-  }
-});
-
-export default CreateRoomButton;
+export default function(props) {
+	return (
+		<InputWithButton
+			buttonName="Create room"
+			onClick={ props.createRoom }
+			/>
+	);
+}

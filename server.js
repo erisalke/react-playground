@@ -14,7 +14,8 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
-const compiler = webpack(webpackConfig)
+const compiler = webpack(webpackConfig);
+
 app.use(webpackDevMiddleware(
   compiler,
   {
@@ -25,7 +26,9 @@ app.use(webpackDevMiddleware(
 ));
 app.use(webpackHotMiddleware(compiler))
 app.use('/static', express.static('dist'))
-app.get('*', (req, res) => { res.sendFile(webpackConfig.output.path + '/index.html'); })
+app.get('*', (req, res) => {
+	res.sendFile(webpackConfig.output.path + '/index.html');
+})
 
 io.on('connection', (socket) => {
 
