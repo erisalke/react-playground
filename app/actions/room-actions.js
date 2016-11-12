@@ -4,14 +4,14 @@ import { emitEvent } from '../api/websockets';
 
 export function getRoomsSuccess(rooms) {
   return {
-    type: types.GET_ROOMS_SUCCESS,
+    type: types.GET_ROOMS,
     rooms,
   };
 }
 
 export function createRoomSuccess(room) {
   return {
-    type: types.CREATE_ROOM_SUCCESS,
+    type: types.CREATE_ROOM,
     room,
   };
 }

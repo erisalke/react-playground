@@ -3,7 +3,7 @@ import { emitEvent } from '../api/websockets';
 
 export function updateChatSuccess(user, msg, roomId) {
   return {
-    type: types.UPDATE_CHAT_SUCCESS,
+    type: types.UPDATE_CHAT,
     user,
 		msg,
 		roomId

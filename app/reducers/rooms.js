@@ -7,11 +7,11 @@ const rooms = (state = [], action) => {
 
   switch (action.type) {
 
-		case types.GET_ROOMS_SUCCESS: {
+		case types.GET_ROOMS: {
       return [ ...action.rooms ];
 		}
 
-		case types.CREATE_ROOM_SUCCESS: {
+		case types.CREATE_ROOM: {
 			return [
 				{
 					...action.room,
@@ -41,7 +41,7 @@ const rooms = (state = [], action) => {
 			})
 		}
 
-		case types.UPDATE_CHAT_SUCCESS: {
+		case types.UPDATE_CHAT: {
 			return state.map((room) => {
 				if (room.id === action.roomId) {
 					room.chat = chat(room.chat, action);
@@ -77,7 +77,7 @@ const rooms = (state = [], action) => {
 			})
 		}
 
-		case types.RESTART_GAME_SUCCESS: {
+		case types.RESTART_GAME: {
 			return state.map((room) => {
 				if (room.id === action.roomId) {
 					room.game = tictactoe(room.game, action);

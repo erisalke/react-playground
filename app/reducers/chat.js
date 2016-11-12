@@ -5,7 +5,7 @@ const chat = (state = [
 ], action) => {
   switch (action.type) {
 
-    case types.UPDATE_CHAT_SUCCESS:
+    case types.UPDATE_CHAT:
 			return [
 				...state,
 				{ user: action.user, msg: action.msg }

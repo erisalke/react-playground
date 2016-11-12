@@ -49,7 +49,7 @@ const tictactoe = (game = initialState, action) => {
 				}
 			}
 
-		case types.RESTART_GAME_SUCCESS: {
+		case types.RESTART_GAME: {
 			return {
 				board: board(undefined, action),
 				players: players(game.players, { type: types.ROTATE_TURN }),
