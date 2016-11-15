@@ -1,32 +1,25 @@
 import React from 'react';
 import _ from 'lodash';
 
-
-const tictactoeScore = function (props) {
-	const sortedPlayers = _.sortBy(props.players, [function(o) { return o.name; }]);
+const TictactoeScore = function (props) {
+	const sortedPlayers = _.sortBy(props.players, [( o => name )]);
   return (
-		<div>
 			<div>Scores:
 				{
 					sortedPlayers.map((player, i) =>{
-						if (player.id === props.user.id) {
-							return(
-								<div key={i}>
-									<b>{player.name}: {player.score}</b>
-								</div>
-							)
-						}
-						return(
-							<div key={i}>
-								{player.name}: {player.score}
-							</div>
-						)
+						return (<PlayerNameScore key={i} player={ player } me={ props.user } />)
 					})
 				}
 			</div>
-
-		</div>
     );
 }
 
-export default tictactoeScore;
+const PlayerNameScore = (props) => {
+	if (props.player.id === props.me.id) {
+		return( <div><b>{props.player.name}: {props.player.score}</b></div> )
+	} else {
+		return( <div>{props.player.name}: {props.player.score}</div> )
+	}
+}
+
+export default TictactoeScore;

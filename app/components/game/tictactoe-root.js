@@ -25,7 +25,7 @@ const TicTacToeRoot = React.createClass({
 
   componentWillUnmount: function() {
 		const roomId = this.props.roomId;
-		const player = this.props.game.players.find(
+		const player = this.props.players.find(
 			player => player.id === this.props.user.id
 		);
 		if (player) {
@@ -35,7 +35,7 @@ const TicTacToeRoot = React.createClass({
   },
 
 	isPlaying: function () {
-		return this.props.game.players.some(
+		return this.props.players.some(
 			player => player.id === this.props.user.id )
 	},
 
@@ -51,9 +51,8 @@ const TicTacToeRoot = React.createClass({
 const mapStateToProps = function(store, ownProps) {
 	const room = store.rooms.find(room => room.id === ownProps.roomId);
   return {
-    game: room.game,
+    players: room.game.players,
     user: store.session.user,
-		signs: store.session.signs,
 		roomId: room.id,
   };
 };
