@@ -1,10 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-	selectTile,
-	restartGame,
-	addPlayerToGame,
-	removePlayerFromGame,
+	selectTile
 } from '../../actions/tictactoe-actions';
 import TicTacToeScore from './tictactoe-score';
 import TicTacToeSelector from './tictactoe-selector';
@@ -12,27 +9,15 @@ import TicTacToeNextMove from './tictactoe-nextMove';
 import { emitEvent } from '../../api/websockets';
 import store from '../../store';
 
+import GameBoard from './gameBoard';
+
 const TicTacToe = React.createClass({
-
-  markTile: function(position){
-		const user = this.props.user;
-		const roomId = this.props.roomId;
-
-		if (this.props.game.players[0].id === this.props.user.id
-				&& this.props.game.players.length === 2
-				&& ! this.props.game.board[position]
-				&& ! (this.props.game.winner
-					&& this.props.game.winner.hasOwnProperty('user'))) {
-			store.dispatch(selectTile(position, user, roomId))
-	    emitEvent('action', selectTile(position, user, roomId))
-		}
-  },
-
   render: function() {
     return (
       <div className = 'main-containerX'>
 
-				<TicTacToeSelector me={ this.props.signs.me } />
+				<TicTacToeSelector
+					me={ this.props.signs.me } />
 
 				<TicTacToeNextMove
 					winner= { this.props.game.winner }
@@ -43,51 +28,13 @@ const TicTacToe = React.createClass({
 					players= { this.props.game.players }
 					user= { this.props.user } />
 
-        <div className = 'boardX'>
-					{
+				<GameBoard
+					game= { this.props.game }
+					user= { this.props.user }
+					signs= { this.props.signs }
+					selectTile= { this.props.selectTile } />
 
-            this.props.game.board.map((tile,i) => {
-							var classVariant = ["cell"]
-
-              if (i === 1 || i === 4 || i === 7) {
-                classVariant.push("cellY")
-              }
-              if (i === 3 || i === 4 || i === 5) {
-                classVariant.push("cellX")
-              }
-
-							// winning check
-							if (this.props.game.winner &&
-									this.props.game.winner.hasOwnProperty('user')){
-								if (this.props.game.winner.line.some((lineElement) => lineElement===i)){
-									if (this.props.game.winner.user.id === this.props.user.id){
-											classVariant.push("greenCell")
-									} else {
-										classVariant.push("redCell")
-									}
-								}
-							}
-
-              return (
-                <div
-                  key = { i }
-                  className = { classVariant.join(" ") }
-                  onClick = { ()=>{ this.markTile(i) } }>
-                    {
-											(tile === '')
-												? ''
-												: (tile === this.props.user.id)
-														? this.props.signs.me
-														: this.props.signs.opp
-										}
-                </div>
-              )
-            })
-          }
-
-        </div>
       </div>
-
     );
   }
 });
@@ -102,11 +49,15 @@ const mapStateToProps = function(store, ownProps) {
   };
 };
 
+
 function mapDispatchToProps(dispatch, ownProps) {
-  return { restartGame :
-		function () {
+  return {
+		restartGame : () => {
 			dispatch(restartGame( ownProps.roomId ))
-		}
+		},
+		selectTile : (position, user) => {
+			dispatch(selectTile( position, user, ownProps.roomId ))
+		},
 	}
 }
 

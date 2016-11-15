@@ -10,7 +10,14 @@ export function restartGameSuccess(roomId) {
 }
 
 export function selectTile(position, user, roomId) {
-  return {
+	return dispatch => {
+		dispatch(selectTileAction(position, user, roomId))
+		emitEvent('action', selectTileAction(position, user, roomId))
+	};
+}
+
+function selectTileAction(position, user, roomId) {
+	return {
     type: types.SELECT_TILE,
 		position,
 		user,
