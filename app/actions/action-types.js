@@ -18,6 +18,8 @@ export const RESTART_GAME = 'RESTART_GAME';
 export const SELECT_TILE = 'SELECT_TILE';
 export const ADD_PLAYER_TO_GAME = 'ADD_PLAYER_TO_GAME';
 export const REMOVE_PLAYER_FROM_GAME = 'REMOVE_PLAYER_FROM_GAME';
+export const ADD_POINT = 'ADD_POINT';
+export const ROTATE_TURN = 'ROTATE_TURN';
 
 // User actions
 export const SET_USER = 'SET_USER';
