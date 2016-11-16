@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-	selectTile
+	selectTile,
+	restartGame,
 } from '../../actions/tictactoe-actions';
 import TicTacToeScore from './tictactoe-score';
 import TicTacToeSelector from './tictactoe-selector';

@@ -57,12 +57,4 @@ const mapStateToProps = function(store, ownProps) {
   };
 };
 
-function mapDispatchToProps(dispatch, ownProps) {
-  return { restartGame :
-		function () {
-			dispatch(restartGame( ownProps.roomId ))
-		}
-	}
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(TicTacToeRoot);
+export default connect(mapStateToProps)(TicTacToeRoot);
